@@ -35,7 +35,7 @@
             <!-- Logo -->
             <a href="../../index2.html" class="logo">
                <!-- mini logo for sidebar mini 50x50 pixels -->
-               <span class="logo-mini"><b>Khaanavali</b>LT</span>
+               <span class="logo-mini"><b>Pipeline Map</b>LT</span>
                <!-- logo for regular state and mobile devices -->
                <span class="logo-lg"><b>Vendor</b></span>
             </a>
@@ -172,37 +172,68 @@
                               <div class="form-group">
                                  <label for="inputEmail3"  class="col-sm-2 control-label">Name</label>
                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control"  name="Name"  placeholder={{candidateName}} ng-model = "name" required>
+                                    <input type="text" class="form-control"  name="Name"  placeholder={{vendorName}} ng-model = "name" required>
                                  </div>
                               </div>
-                              <div class="form-group">
-                                 <label for="inputEmail3"  class="col-sm-2 control-label">Party</label>
-                                 <div class="col-sm-10">
-                                    <select class="form-control select2" style="width: 100%;" ng-model = "party" required>
-                                       <option>Congress</option>
-                                       <option>BJP</option>
-                                       <option>JDS</option>
-                                    </select>
-                                 </div>
-                              </div>
-                              <div class="form-group">
-                                 <label for="inputEmail3"  class="col-sm-2 control-label">Constituency</label>
-                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control"  name="Name"  placeholder={{Constituency}} ng-model = "constituency" required>
-                                 </div>
-                              </div>
+
+                             
                               <div class="form-group">
                                  <label for="inputEmail3"  class="col-sm-2 control-label">Phone</label>
                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control"  name="phone" placeholder="0" ng-model = "phone" required>
+                                    <input type="text" class="form-control"  name="phone" placeholder="0" ng-model = "vendorphone" required>
                                  </div>
                               </div>
                               <div class="form-group">
                                  <label for="inputEmail3"  class="col-sm-2 control-label">Email Address</label>
                                  <div class="col-sm-10">
-                                    <input type="text" class="form-control"  name="Name"  placeholder={{email}} ng-model = "email" required>
+                                    <input type="text" class="form-control"  name="Name"  placeholder={{email}} ng-model = "vendoremail" >
                                  </div>
                               </div>
+                              <div class="form-group">
+                                 <label for="inputEmail3" class="col-sm-2 control-label">Address1</label>
+                                 <div class="col-sm-10">
+                                   <input type="text" class="form-control"  name="Address1" placeholder="Address1" ng-model = "vendorAddress1">
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label for="inputEmail3" class="col-sm-2 control-label">Address2</label>
+                                 <div class="col-sm-10">
+                                   <input type="text" class="form-control"  name="Address1" placeholder={{hotelName}} ng-model = "vendorAddress2">
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label for="inputEmail3" class="col-sm-2 control-label">Street</label>
+                                 <div class="col-sm-10">
+                                   <input type="text" class="form-control"  name="street" placeholder={{hotelName}} ng-model = "vendorStreet">
+                                 </div>
+                               </div-->
+                             </div>
+                                <div class="form-group">
+                                 <label for="inputEmail3" class="col-sm-2 control-label">Areaname</label>
+                                 <div class="col-sm-10">
+                                   <input type="text" class="form-control" name="Areaname" placeholder="Areaname" ng-model = "vendorAreaname" required>
+                                 </div>
+                               </div>
+    
+           
+                               <div class="form-group">
+                                 <label for="inputEmail3" class="col-sm-2 control-label">Zip</label>
+                                 <div class="col-sm-10">
+                                   <input type="Number" class="form-control"  name="zip" placeholder="zip" ng-model = "vendorzip" required>
+                                 </div>
+                               </div> 
+                                <div class="form-group">
+                                 <label for="inputEmail3" name="latitude"  class="col-sm-2 control-label">latitude</label>
+                                 <div class="col-sm-10">
+                                   <input type="text" class="form-control" name="latitude" placeholder="latitude" ng-model = "vendorlatitude" required>
+                                 </div>
+                               </div>
+                               <div class="form-group">
+                                 <label for="inputEmail3"name="longitude"  class="col-sm-2 control-label">longitude</label>
+                                 <div class="col-sm-10">
+                                   <input type="text" class="form-control" name="longitude" placeholder="longitude" ng-model = "vendorlongitude">
+                                 </div>
+                               </div>
                            </div>
                            <!-- /.box-body -->
                            <div class="box-footer">
@@ -247,7 +278,7 @@
             <div class="pull-right hidden-xs">
                <b>Version</b> 2.3.0
             </div>
-            <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Khaanavali </a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Pipeline Map </a>.</strong> All rights reserved.
          </footer>
          <!-- Control Sidebar -->
          <aside class="control-sidebar control-sidebar-dark">
