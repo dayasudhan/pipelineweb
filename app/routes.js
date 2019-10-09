@@ -165,8 +165,12 @@ app.post('/login', function(req, res, next) {
         //redirect_url = '/';
         redirect_url = '/p/candidate_update';
         return res.redirect(redirect_url);
-       }
-     
+      }
+      else if(req.body.role == 'vendor') 
+      {
+       redirect_url = '/p/vendor_details';
+        return res.redirect(redirect_url);
+      }
     });
   })(req, res, next);
 });
@@ -341,7 +345,7 @@ console.log(req.body);
 
 function registerVendor(req, res, next) {
   console.log("/registerVendor");
-  var hotel_id = "C";
+  var hotel_id = "V";
   var res = getNextSequence('vendor',function(data) {
 
     hotel_id = hotel_id + data.sequence;
@@ -1019,10 +1023,13 @@ app.post( '/v1/admin/counters/:id', function( request, response ) {
     console.log("post /v1/admin/counters");
     console.log(request.params.id);
      //var dd = {'cityName':"dvg",'subAreas':[{'name':"rajajinagar"},{'name':"vijaynagar"}]};
+     console.log("post /v1/admin/counters 1");
      var dd = {_id:request.params.id,
                 sequence:0};
+                console.log("post /v1/admin/counters 2");
       var counters = new CountersModel(
          dd);
+         console.log("post /v1/admin/counters 1");
         return counters.save(function( err) {
         if( !err ) {
             console.log("no error");
