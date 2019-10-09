@@ -342,7 +342,7 @@ console.log(req.body);
 function registerVendor(req, res, next) {
   console.log("/registerVendor");
   var hotel_id = "C";
-  var res = getNextSequence('candidate',function(data) {
+  var res = getNextSequence('vendor',function(data) {
 
     hotel_id = hotel_id + data.sequence;
     console.log(hotel_id);

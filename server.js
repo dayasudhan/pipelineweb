@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 var uristring = 
   process.env.MONGODB_URI ||
   process.env.MONGOLAB_URI ||
-  'mongodb://localhost/election';
+  'mongodb://localhost/pipelineweb';
 
 // mongoose
 mongoose.connect(uristring,function (err, res) {
