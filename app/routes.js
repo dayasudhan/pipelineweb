@@ -97,11 +97,7 @@ admin.initializeApp({
 //   databaseURL: "https://kumarannajds.firebaseio.com"
 // })
 
-// var serviceAccount3 = require('../sharadhapnaikjdsshimoga-firebase-adminsdk-2ymgd-fdb55e27c3.json');
-// admin3.initializeApp({
-//   credential: admin3.credential.cert(serviceAccount3),
-//   databaseURL: "https://sharadhapnaikjdsshimoga.firebaseio.com"
-// })
+
 var config = {
   apiKey: "AIzaSyDPveny7Zzop7u4eW4zZefIyxwYJCgH8ro",
   authDomain: "election-b8219.firebaseapp.com",
