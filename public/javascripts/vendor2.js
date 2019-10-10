@@ -206,17 +206,17 @@ $scope.trackerUpdateStatus = function(param1)
         name:$scope.vendorname, 
         email:$scope.vendoremail, 
         phone:$scope.vendorphone,
-        username: param, 
-        address1:$scope.vendorAddress1,
+        username: param
+        // address1:$scope.vendorAddress1,
        
-        address2:$scope.vendorAddress2, 
-        street :$scope.vendorStreet,
-        landmark:$scope.vendorLandmark, 
-        areaname:$scope.vendorAreaname, 
-        city:$scope.vendorcity, 
-        zip:$scope.vendorzip,
-        latitude:$scope.latitude, 
-        longitude:$scope.longitude
+        // address2:$scope.vendorAddress2, 
+        // street :$scope.vendorStreet,
+        // landmark:$scope.vendorLandmark, 
+        // areaname:$scope.vendorAreaname, 
+        // city:$scope.vendorcity, 
+        // zip:$scope.vendorzip,
+        // latitude:$scope.latitude, 
+        // longitude:$scope.longitude
 
        };
 
