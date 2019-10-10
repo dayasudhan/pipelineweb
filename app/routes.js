@@ -228,8 +228,8 @@ app.get('/p/vendor_details', function (req, res) {
 app.get('/p/vendor_list', function (req, res) {
   res.render('vendor_list', { user : req.user });
 });
-app.get('/p/customer_list', function (req, res) {
-  res.render('customer_list', { user : req.user });
+app.get('/p/pcustomer_list', function (req, res) {
+  res.render('pcustomer_list', { user : req.user });
 });
 app.get('/p/candidate_update', function (req, res) {
     res.render('candidate_update', { user : req.user });
@@ -924,6 +924,20 @@ app.get( '/v1/admin/account/all', function( request, response ) {
     });
 });
 
+app.get( '/v1/vendor/info/:id', function( request, response ) {
+  console.log("GET --/v1/vendor/info/");
+
+  return VendorInfoModel.find({ 'username':request.params.id},
+    function( err, vendor ) {
+      if( !err ) {
+        
+          return response.send( vendor );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
 
 app.post( '/v1/vendor/info/:id', function( req, res ) {
     console.log("VendorInfo post");

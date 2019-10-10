@@ -223,14 +223,14 @@ $scope.trackerUpdateStatus = function(param1)
       $http.post(url,postData)
         .success(function (data, status, headers, config)
         {
-            console.log("addDetails success");
-            alert("addDetails success");
+            console.log("addVendorDetails success");
+            alert("addVendorDetails success");
 
         })
         .error(function (data, status, headers, config)
         {
-          console.log("addDetails error");
-           alert("addDetails error");
+          console.log("addVendorDetails error");
+           alert("addVendorDetails error");
         });
     };
 
