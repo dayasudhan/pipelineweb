@@ -225,6 +225,12 @@ app.get('/', function (req, res) {
 app.get('/p/vendor_details', function (req, res) {
     res.render('vendor_details', { user : req.user });
 });
+app.get('/p/vendor_list', function (req, res) {
+  res.render('vendor_list', { user : req.user });
+});
+app.get('/p/customer_list', function (req, res) {
+  res.render('customer_list', { user : req.user });
+});
 app.get('/p/candidate_update', function (req, res) {
     res.render('candidate_update', { user : req.user });
 });
