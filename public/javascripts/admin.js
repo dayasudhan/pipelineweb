@@ -113,7 +113,44 @@ app = angular.module("adminModule", []);
            alert("addDetails error");
         });
     };
+    $scope.addVendorDetails = function (param) {
+      console.log("addVendorDetails 1");
+      console.log("deliverAreas",deliverAreas);
 
+
+      var url = "/v1/vendor/info/";
+      url = url + param;
+      var postData={
+        name:$scope.vendorname, 
+        email:$scope.vendoremail, 
+        phone:$scope.vendorphone,
+        username: param
+        // address1:$scope.vendorAddress1,
+       
+        // address2:$scope.vendorAddress2, 
+        // street :$scope.vendorStreet,
+        // landmark:$scope.vendorLandmark, 
+        // areaname:$scope.vendorAreaname, 
+        // city:$scope.vendorcity, 
+        // zip:$scope.vendorzip,
+        // latitude:$scope.latitude, 
+        // longitude:$scope.longitude
+
+       };
+
+      $http.post(url,postData)
+        .success(function (data, status, headers, config)
+        {
+            console.log("addVendorDetails success");
+            alert("addVendorDetails success");
+
+        })
+        .error(function (data, status, headers, config)
+        {
+          console.log("addVendorDetails error");
+           alert("addVendorDetails error");
+        });
+    };
 //////
 
 
