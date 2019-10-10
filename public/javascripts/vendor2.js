@@ -194,118 +194,29 @@ $scope.trackerUpdateStatus = function(param1)
          
     };
 
-      $scope.addDetails = function (param) {
-      console.log("addDetails 1");
 
-      var bulktype = 0;
-      if($scope.isBulkVendor == 'nonBulkType')
-      {
-          bulktype =  0;
-      }
-      else if($scope.isBulkVendor == 'BulkType')
-      {
-          bulktype  = 2;
-      }
-      else
-      {
-          bulktype = 1;
-      }
-
-      var deliverAreas =  [];
-      if(bulktype ==0 || bulktype ==1)
-      {
-        angular.forEach($scope.deliverareas, function(item) {
-           var obj = new Object();
-            obj.name = item;
-            obj.isBulkAreaOnly = 0;
-            deliverAreas.push(obj);
-        })
-      }
-
-      if(bulktype ==2 || bulktype ==1)
-      {
-        angular.forEach($scope.bulkdeliverareas, function(item) {
-
-           var obj = new Object();
-            obj.name = item;
-
-            console.log(item,"2");
-            var exist = 0;
-            for (var i = 0; i < deliverAreas.length; i++) {
-                if (deliverAreas[i].name === item) {
-                  console.log("present 1");
-                   exist = 1;
-                }
-            }
-          
-
-            if(exist === 1)
-            {
-              console.log("present 2");
-             
-            }
-            else
-            {
-              console.log("present 3");
-              obj.isBulkAreaOnly = 1;
-              deliverAreas.push(obj);
-            }
-        })
-      }
-      
+      $scope.addVendorDetails = function (param) {
+      console.log("addVendorDetails 1");
       console.log("deliverAreas",deliverAreas);
-
-      $scope.hotelcity = $scope.cityCoverage.citys[$scope.selectedCity]
-      console.log($scope.hotelcity);
-      console.log($scope.deliverareas);
-      console.log($scope.morningSupportTime);
-      console.log($scope.morningstarttime);
-      console.log($scope.morningendtime);
-     
-    var mornstartTimevalue = "",mornendTimevalue = "",lunchstartTimevalue="",lunchendTimevalue="",dinnerendTimevalue="",dinnerstartTimevalue="";
-    if($scope.morningSupportTime  == 'Yes')
-    {
-           mornstartTimevalue = ($scope.morningstarttime.getHours()) + ':' + ($scope.morningstarttime.getMinutes());
-          mornendTimevalue = ($scope.morningendtime.getHours()) + ':' + ($scope.morningendtime.getMinutes());
-     }
-     if($scope.lunchSupportTime  == 'Yes')  
-     {  
-          lunchstartTimevalue = ($scope.lunchstarttime.getHours()) + ':' + ($scope.lunchstarttime.getMinutes());
-          lunchendTimevalue = ($scope.lunchendtime.getHours()) + ':' + ($scope.lunchendtime.getMinutes());
-      }
-      if($scope.dinnerSupportTime  == 'Yes')
-      {  
-          dinnerendTimevalue = ($scope.dinnerendtime.getHours()) + ':' + ($scope.dinnerendtime.getMinutes());
-          dinnerstartTimevalue = ($scope.dinnerstarttime.getHours()) + ':' + ($scope.dinnerstarttime.getMinutes());
-      }
-      var orderAcceptTimingsValue = {Morning:{startTime:mornstartTimevalue,endTime:mornendTimevalue,available:$scope.morningSupportTime},
-                        Lunch:{startTime:lunchstartTimevalue,endTime:lunchendTimevalue,available:$scope.lunchSupportTime},
-                        Dinner:{startTime:dinnerstartTimevalue,endTime:dinnerendTimevalue,available:$scope.dinnerSupportTime}
-                            }
-      console.log(orderAcceptTimingsValue);
-
 
 
       var url = "/v1/vendor/info/";
       url = url + param;
-      var postData={Name:$scope.hotelName, username: param, id:$scope.hotelId,
-        Address1:$scope.hotelAddress1, phone:$scope.hotelphone,
-        Address2:"", street :"",Landmark:$scope.hotelLandmark, 
-        Areaname:$scope.hotelAreaname, 
-        City:$scope.hotelcity, zip:$scope.hotelzip,latitude:$scope.latitude, longitude:$scope.longitude, logo:"",
-         vegornonveg:$scope.vegornonveg, 
-         speciality: $scope.speciality , 
-         deliverRange:$scope.deliverRange,
-         deliverCharge:$scope.deliverCharge,
-         deliveryTime:$scope.deliveryTime,
-         minimumOrder:$scope.minimumOrder,
-         orderAcceptTimings:orderAcceptTimingsValue,
-         deliverareas:deliverAreas,
-         isBulkVendor:bulktype,
-         bulkdeliverCharge:$scope.bulkdeliverCharge,
-         bulkdeliverRange: $scope.bulkdeliverRange,
-         bulkminimumOrder:$scope.bulkminimumOrder,
-         bulkdeliveryTime:$scope.bulkdeliveryTime
+      var postData={
+        name:$scope.vendorname, 
+        email:$scope.vendoremail, 
+        phone:$scope.vendorphone,
+        username: param, 
+        address1:$scope.vendorAddress1,
+       
+        address2:$scope.vendorAddress2, 
+        street :$scope.vendorStreet,
+        landmark:$scope.vendorLandmark, 
+        areaname:$scope.vendorAreaname, 
+        city:$scope.vendorcity, 
+        zip:$scope.vendorzip,
+        latitude:$scope.latitude, 
+        longitude:$scope.longitude
 
        };
 

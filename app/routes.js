@@ -1,5 +1,6 @@
 
-var VendorInfoModel = require('../app/models/CandidateInfo');
+var VendorInfoModel = require('../app/models/VendorInfo');
+var CustomerInfoModel = require('../app/models/CustomerInfo');
 var CountersModel = require('../app/models/counters');
 var AWS = require('aws-sdk');
 var multer = require('multer');
@@ -921,12 +922,12 @@ app.get( '/v1/admin/account/all', function( request, response ) {
 app.post( '/v1/vendor/info/:id', function( req, res ) {
     console.log("VendorInfo post");
     console.log(req.body);
-    storeCandidateInfo(req,res,function(req,res){
-      console.log("storeCandidateInfo success");
+    storeVendorInfo(req,res,function(req,res){
+      console.log("storeVendorInfo success");
     });
 });
 
-function storeCandidateInfo(request,response,callback,param)
+function storeVendorInfo(request,response,callback,param)
 {
 console.log("storeCandidateInfo");
 console.log(request.params.id);
@@ -934,25 +935,52 @@ console.log(request.params.id);
  VendorInfoModel.update({ 'username':request.params.id},
       {
         name:request.body.name,
-        party:request.body.party,
-        constituency:request.body.constituency,
-        email:request.body.email2, 
-        phone:request.body.phone ,
-        logo:request.body.logo
+        email:request.body.email, 
+        phone:request.body.phone 
       },
        function( err ) {
         if( !err ) {
-            console.log( 'storeCandidateInfo created' );
+            console.log( 'storeVendorInfo created' );
             callback(request,response);
             return ;
         } else {
-         console.log( 'storeCandidateInfo error' );
+         console.log( 'storeVendorInfo error' );
             console.log( err );
             return response.send('ERROR');
         }
     });
 }
+app.post( '/v1/customer/info/:id', function( req, res ) {
+  console.log("CustomerInfo post");
+  console.log(req.body);
+  storeCustomerInfo(req,res,function(req,res){
+    console.log("CustomerInfo success");
+  });
+});
 
+function storeCustomerInfo(request,response,callback,param)
+{
+console.log("storeCustomerInfo");
+console.log(request.params.id);
+
+CustomerInfoModel.update({ 'username':request.params.id},
+    {
+      name:request.body.name,
+      email:request.body.email, 
+      phone:request.body.phone 
+    },
+     function( err ) {
+      if( !err ) {
+          console.log( 'storeCustomerInfo created' );
+          callback(request,response);
+          return ;
+      } else {
+       console.log( 'storeCustomerInfo error' );
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+}
 function storeVendoruniqueId(request,response,callback,param)
 {
 console.log("storeVendorUniquiId");
