@@ -949,9 +949,9 @@ app.post( '/v1/vendor/info/:id', function( req, res ) {
 
 function storeVendorInfo(request,response,callback,param)
 {
-console.log("storeCandidateInfo");
+console.log("storeVendorInfo");
 console.log(request.params.id);
-
+console.log(request.body);
  VendorInfoModel.update({ 'username':request.params.id},
       {
         name:request.body.name,
