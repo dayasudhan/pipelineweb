@@ -114,8 +114,7 @@ app = angular.module("adminModule", []);
         });
     };
     $scope.addVendorDetails = function (param) {
-      console.log("addVendorDetails 1");
-      console.log("deliverAreas",deliverAreas);
+      
 
 
       var url = "/v1/vendor/info/";
