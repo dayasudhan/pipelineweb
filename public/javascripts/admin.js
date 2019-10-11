@@ -115,7 +115,7 @@ app = angular.module("adminModule", []);
     };
     $scope.addVendorDetails = function (param) {
       
-
+      console.log("addVendorDetails");
 
       var url = "/v1/vendor/info/";
       url = url + param;
