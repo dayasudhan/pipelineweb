@@ -17,6 +17,8 @@ app = angular.module("adminModule", []);
       $http.get(url,config)
         .success(function (data, status, headers, config)
         {
+          console.log(data);
+
           $scope.vendorlist = data;
           $scope.total2 = data.length;
 console.log($scope.vendorlist);
