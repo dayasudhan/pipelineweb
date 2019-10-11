@@ -28,10 +28,10 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body class="hold-transition skin-blue sidebar-mini" ng-app="vendorModule">
-    <div class="wrapper"  ng-controller="menuController">
+  <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule">
+    <div class="wrapper"  ng-controller="adminController">
 
-      <header class="main-header" data-ng-init="getMenuList('<%= user.local.email %>')"  >
+      <header class="main-header" data-ng-init="getVendorList()"  >
         <!-- Logo -->
         <a href="../../index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
@@ -173,18 +173,18 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="menu in menuList">
+                      <tr ng-repeat="vendor in vendorlist">
                         <td>{{$index +1}}</td>
-                        <td>{{menu.name}}</td>
-                        <td>{{menu.price}}</td>
-                        <td>{{menu.timings}}</td>
+                        <td>{{vendor.name}}</td>
+                        <td>{{vendor.phone}}</td>
+                        <td>{{vendor.email}}</td>
                         <!-- <td><input type="checkbox" 
                           name="myTextEditBox" 
                           value={{menu.name}}
                            ng-checked="selection.indexOf(menu) > -1"
                            ng-click="toggleSelection(menu)">
                         </td> -->
-                        <td><button type="submit" class="btn btn-info pull-right" ng-click= "deleteMenu('<%= user.local.email %>',menu)">Delete</button></td>
+                        <!-- <td><button type="submit" class="btn btn-info pull-right" ng-click= "deleteMenu('<%= user.local.email %>',menu)">Delete</button></td> -->
 
                       </tr>
                      

@@ -1043,7 +1043,7 @@ app.get('/ping', function(req, res){
 });
 
 
-app.get( '/v1/admin/account/all', function( request, response ) {
+app.get( '/v1/admin/vendor/all', function( request, response ) {
 
     return VendorInfoModel.find(function( err, order ) {
         if( !err ) {
@@ -1054,7 +1054,17 @@ app.get( '/v1/admin/account/all', function( request, response ) {
         }
     });
 });
+app.get( '/v1/admin/customer/all', function( request, response ) {
 
+  return CustomerInfoModel.find(function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
 app.get( '/v1/admin/counters/all', function( request, response ) {
     console.log("get /v1/admin/counters");
     return CountersModel.find(function( err, order ) {
