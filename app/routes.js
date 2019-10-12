@@ -1115,8 +1115,8 @@ app.post( '/v1/pipeline/:id', function( request, response ) {
       return pipeline.save(function( err) {
       if( !err ) {
           console.log("no error");
-          console.log(counters);
-          return response.send(counters);
+          console.log(pipeline);
+          return response.send(pipeline);
       } else {
           console.log( err );
           return response.send('ERROR');
