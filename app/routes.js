@@ -1175,9 +1175,35 @@ app.get( '/v1/plinemap/all', function( request, response ) {
       }
   });
 });
-app.get( '/v1/pipelinemap', function( request, response ) {
-
-  return PipelineModel.find(function( err, order ) {
+app.get( '/v1/plinemap/nearby', function( request, response ) {
+  // collection.find(
+  //   { 'address.coord':
+  //     { $geoWithin:
+ 	//    { $geometry:
+ 	//      { type : "Polygon" ,
+  //           coordinates: [ [ [ -73, 40 ], [ -74, 41 ], [ -72, 39 ], [ -73, 40 ] ] ]
+  //         }
+  //       }
+  //     }
+  //   }
+  // coordinates: [[
+  //   [-102, 41],
+  //   [-102, 37],
+  //   [-109, 37],
+  //   [-109, 41]
+  // ]]
+ // var geojsonPoly2 = { type: 'Polygon', coordinates: [[[-5,-5], ['-5',5], [5,5], [5,-5],[-5,'-5']]] }
+  var geojsonPoly = { type: 'Polygon', coordinates: [[
+    [14.1603438,75.6205914],
+    [14.0697727,75.6018832],
+    [14.0510405,75.7768592],
+    [14.2538865,75.7388695],
+    [14.1603438,75.6205914]
+  ]] }
+// Model.find({ loc: { $within: { $geometry: geojsonPoly }}})
+// // or
+// Model.where('loc').within.geometry(geojsonPoly)
+  return PlineModel.find({location:{ $within: { $geometry: geojsonPoly }}},function( err, order ) {
       if( !err ) {
           return response.send( order );
       } else {
