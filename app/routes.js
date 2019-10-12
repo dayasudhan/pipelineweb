@@ -1186,7 +1186,7 @@ app.get( '/v1/plinemap/nearby', function( request, response ) {
   //       }
   //     }
   //   }\
-  console.log(request.headers.geojsonPoly);
+  console.log(request.headers);
   // var geojsonPoly = { type: 'Polygon', coordinates: [[
   //   [14.1603438,75.6205914],
   //   [14.0697727,75.6018832],
