@@ -6,7 +6,7 @@ const LineSchema = new mongoose.Schema({
       required: true
     },
     coordinates: {
-      type: [[[Number]]], // Array of arrays of arrays of numbers
+      type:  Array, // Array of arrays of arrays of numbers
       required: true
     }
   });
@@ -16,6 +16,23 @@ const LineSchema = new mongoose.Schema({
     location: LineSchema
   });
 
-  var PLineModel = mongoose.model( 'PLineSchema', PLineSchema );
+// var mongoose = require('mongoose');
+ 
+// var LineSchema = new mongoose.Schema({
+//     point: mongoose.Schema.Types.Point,
+//     multipoint: mongoose.Schema.Types.MultiPoint,
+//     linestring: mongoose.Schema.Types.LineString,
+//     multilinestring: mongoose.Schema.Types.MultiLineString,
+//     polygon: mongoose.Schema.Types.Polygon,
+//     multipolygon: mongoose.Schema.Types.MultiPolygon,
+//     geometry: mongoose.Schema.Types.Geometry,
+//     geometrycollection: mongoose.Schema.Types.GeometryCollection,
+//     feature: mongoose.Schema.Types.Feature,
+//     featurecollection: mongoose.Schema.Types.FeatureCollection
+// });
+ 
+
+// var model = db.model('GeoJSON', schema);
+  var PLineModel = mongoose.model( 'GeoJSON', PLineSchema );
 
 module.exports = PLineModel;

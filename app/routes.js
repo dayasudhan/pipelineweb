@@ -1,4 +1,4 @@
-
+var GeoJSON = require('mongoose-geojson-schema');
 var VendorInfoModel = require('../app/models/VendorInfo');
 var CustomerInfoModel = require('../app/models/CustomerInfo');
 var PipelineModel = require('../app/models/pipelineInfo');
@@ -1139,6 +1139,20 @@ app.post( '/v1/pline/:id', function( request, response ) {
   console.log("post /v1/pline");
   //console.log(request.body);
    console.log("post /v1/pline 1");
+//    var test = new GeoJSON({
+   
+//     polygon: {
+//         type: "Polygon",
+//         coordinates: [
+//             [
+//                 [12.123456, 13.1345678],
+//                 [179.999999, -1.345],
+//                 [12.0002, -45.4663],
+//                 [12.123456, 13.1345678]
+//             ],
+          
+//     }
+// });
   //  var dd = {
   //     name:request.body.name,
   //     phone:request.body.phone,
