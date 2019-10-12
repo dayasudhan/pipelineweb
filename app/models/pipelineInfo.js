@@ -9,7 +9,8 @@ var PipelineSchema = new mongoose.Schema({
     coordinates:[{
                 lat:String,
                 longt:String
-            }]
+            }],
+    loc: { type: String, coordinates: [Number] },
     });
 
 //Model
