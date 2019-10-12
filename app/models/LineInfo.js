@@ -33,6 +33,6 @@ const LineSchema = new mongoose.Schema({
  
 
 // var model = db.model('GeoJSON', schema);
-  var PLineModel = mongoose.model( 'GeoJSON', PLineSchema );
+  var PLineModel = mongoose.model( 'PLineSchema', PLineSchema );
 
 module.exports = PLineModel;
