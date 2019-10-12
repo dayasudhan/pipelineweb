@@ -1149,7 +1149,7 @@ app.post( '/v1/pline/:id', function( request, response ) {
       ]]
     };
     console.log("post /v1/pline/2");
-    var pline = { name: 'Denver', location: request.body }; 
+    var pline = { name: request.body.name, location: request.body }; 
     console.log(colorado);
     var pipeline = new PlineModel(pline);
        console.log("post /v1/pline/1");
