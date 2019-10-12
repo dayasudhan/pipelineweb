@@ -1187,11 +1187,12 @@ app.get( '/v1/plinemap/nearby', function( request, response ) {
   //     }
   //   }\
   console.log(request.headers.coordinates);
-  var geojsonPoly = { type: 'Polygon', coordinates: request.headers.coordinates}
+  var geojsonPoly = { type: 'Polygon', coordinates: request.headers.coordinates};
+  console.log(geojsonPoly);
 // Model.find({ loc: { $within: { $geometry: geojsonPoly }}})
 // // or
 // Model.where('loc').within.geometry(geojsonPoly)
-  return PlineModel.find({'location.coordinates':{ $within: { $geometry: request.headers.geojsonPoly }}},function( err, order ) {
+  return PlineModel.find({'location.coordinates':{ $within: { $geometry:geojsonPoly }}},function( err, order ) {
       if( !err ) {
           return response.send( order );
       } else {
