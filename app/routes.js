@@ -1138,20 +1138,9 @@ app.get( '/v1/pipelinemap/all', function( request, response ) {
 app.post( '/v1/pline/:id', function( request, response ) {
    console.log("post /v1/pline");
    console.log(request.body);
-   console.log("post /v1/pline 1");
-  //  const colorado = {
-  //     type: 'Line',
-  //     coordinates: [[
-  //       [-102, 41],
-  //       [-102, 37],
-  //       [-109, 37],
-  //       [-109, 41]
-  //     ]]
-  //   };
-    console.log("post /v1/pline/2");
+ 
     var pline = { name: request.body.name, location: request.body }; 
-    console.log(colorado);
-    var pipeline = new PlineModel(pline);
+        var pipeline = new PlineModel(pline);
        console.log("post /v1/pline/1");
       return pipeline.save(function( err) {
       if( !err ) {
@@ -1175,32 +1164,28 @@ app.get( '/v1/plinemap/all', function( request, response ) {
       }
   });
 });
-app.post( '/v1/plinemap/nearby', function( request, response ) {
-  // collection.find(
-  //   { 'address.coord':
-  //     { $geoWithin:
- 	//    { $geometry:
- 	//      { type : "Polygon" ,
-  //           coordinates: [ [ [ -73, 40 ], [ -74, 41 ], [ -72, 39 ], [ -73, 40 ] ] ]
-  //         }
-  //       }
-  //     }
-  //   }\
+app.post( '/v1/plinemap/geowithin', function( request, response ) {
   console.log(request.body.coordinates);
-  var geojsonPoly2 = { type: 'Polygon', coordinates: [[
-    [14.1603438,75.6205914],
-    [14.0697727,75.6018832],
-    [14.0510405,75.7768592],
-    [14.2538865,75.7388695],
-    [14.1603438,75.6205914]
-  ]] }
-  
+ 
   var geojsonPoly = { type: 'Polygon', coordinates: request.body.coordinates};
   console.log(geojsonPoly);
-// Model.find({ loc: { $within: { $geometry: geojsonPoly }}})
-// // or
-// Model.where('loc').within.geometry(geojsonPoly)
   return PlineModel.find({'location.coordinates':{ $within: { $geometry: geojsonPoly }}},function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
+app.post( '/v1/plinemap/nearby', function( request, response ) {
+  console.log(request.body.coordinates);
+ 
+  var geojsonPoly = { type: 'Point', coordinates: request.body.coordinates};
+  console.log(geojsonPoly);
+  var METERS_PER_MILE = 1609.34
+//db.restaurants.find({ location: { $nearSphere: { $geometry: { type: "Point", coordinates: [ -73.93414657, 40.82302903 ] }, $maxDistance: 5 * METERS_PER_MILE } } })
+  return PlineModel.find({'location.coordinates':{  $nearSphere: { $geometry: geojsonPoly, $maxDistance: 5 * METERS_PER_MILE } } },function( err, order ) {
       if( !err ) {
           return response.send( order );
       } else {
