@@ -1,6 +1,7 @@
 
 var VendorInfoModel = require('../app/models/VendorInfo');
 var CustomerInfoModel = require('../app/models/CustomerInfo');
+var PipelineModel = require('../app/models/pipelineInfo');
 var CountersModel = require('../app/models/counters');
 var AWS = require('aws-sdk');
 var multer = require('multer');
@@ -1099,6 +1100,52 @@ app.post( '/v1/admin/counters/:id', function( request, response ) {
         }
     });
 });
+app.post( '/v1/pipeline/:id', function( request, response ) {
+  console.log("post /v1/pipeline");
+  console.log(request.body);
+   console.log("post /v1/pipeline 1");
+   var dd = {
+      name:request.body.name,
+      phone:request.body.phone,
+      coordinates:request.body.coordinates 
+    };
+    console.log("post /v1/pipeline/2");
+    var pipeline = new PipelineModel(dd);
+       console.log("post /v1/pipeline/1");
+      return pipeline.save(function( err) {
+      if( !err ) {
+          console.log("no error");
+          console.log(counters);
+          return response.send(counters);
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
+app.get( '/v1/pipelinemap/all', function( request, response ) {
+
+    return PipelineModel.find(function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
+
+app.get( '/v1/pipelinemap', function( request, response ) {
+
+  return PipelineModel.find(function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
 function getNextSequence(name,result)
 {
    
@@ -1199,7 +1246,6 @@ app.delete( '/v1/admin/counters/:id', function( request, response ) {
         });
     //});
 });
-
 
 function checkVendorApiAunthaticated(request,type)
 {

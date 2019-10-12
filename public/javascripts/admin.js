@@ -36,6 +36,34 @@ console.log($scope.vendorlist);
           $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
         });
     };
+    $scope.getCustomerList  = function () {
+      console.log("getCustomerList");
+
+      var url = "/v1/admin/customer/all";
+      //url = url + param;
+      $http.get(url,config)
+        .success(function (data, status, headers, config)
+        {
+          //console.log(data);
+
+          $scope.customerlist = data;
+          $scope.total2 = data.length;
+          console.log($scope.customerlist);
+        // angular.forEach($scope.orderlist, function(item) {
+        //   var timestamp = item._id.toString().substring(0,8);
+        //   item.date = new Date( parseInt( timestamp, 16 ) * 1000 );
+        // //  item.date.setTimezone("Asia/kolkata");
+        //   console.log(item._id);
+        //  console.log(item.date);
+        //});
+         console.log("timestamp 2");
+        })
+        .error(function (data, status, headers, config)
+        {
+          $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
+        });
+    };
+
 	  $scope.getTodayOrders = function () {
 	      console.log("getTodayOrders");
 
@@ -150,6 +178,43 @@ console.log($scope.vendorlist);
         {
           console.log("addVendorDetails error");
            alert("addVendorDetails error");
+        });
+    };
+    $scope.addCustomerDetails = function (param) {
+      
+      console.log("addCustomerDetails");
+
+      var url = "/v1/customer/info/";
+      url = url + param;
+      var postData={
+        name:$scope.customername, 
+        email:$scope.customeremail, 
+        phone:$scope.customerphone,
+        username: param
+        // address1:$scope.vendorAddress1,
+       
+        // address2:$scope.vendorAddress2, 
+        // street :$scope.vendorStreet,
+        // landmark:$scope.vendorLandmark, 
+        // areaname:$scope.vendorAreaname, 
+        // city:$scope.vendorcity, 
+        // zip:$scope.vendorzip,
+        // latitude:$scope.latitude, 
+        // longitude:$scope.longitude
+
+       };
+
+      $http.post(url,postData)
+        .success(function (data, status, headers, config)
+        {
+            console.log("addCustomerDetails success");
+            alert("addCustomerDetails success");
+
+        })
+        .error(function (data, status, headers, config)
+        {
+          console.log("addCustomerDetails error");
+           alert("addCustomerDetails error");
         });
     };
 //////

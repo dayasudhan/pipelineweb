@@ -31,13 +31,13 @@
   <body class="hold-transition skin-blue sidebar-mini" ng-app="adminModule">
     <div class="wrapper"  ng-controller="adminController">
 
-      <header class="main-header" data-ng-init="getVendorList()"  >
+      <header class="main-header" data-ng-init="getCustomerList()"  >
         <!-- Logo -->
         <a href="../../index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>A</b>LT</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Vendor</b></span>
+          <span class="logo-lg"><b>Customers</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -142,7 +142,7 @@
             <li><a href="/p/customer_list"><i class="fa fa-circle-o text-yellow"></i> <span>Customer List</span></a></li>
             <li><a href="/p/vendor_details"><i class="fa fa-circle-o text-aqua"></i> <span>Add Vendor</span></a></li>
             <li><a href="/p/customer_details"><i class="fa fa-circle-o text-aqua"></i> <span>Add Customer</span></a></li>
-          </ul>
+        </ul>
         </section>
         <!-- /.sidebar -->
       </aside>
@@ -174,11 +174,11 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="vendor in vendorlist">
+                      <tr ng-repeat="customer in customerlist">
                         <td>{{$index +1}}</td>
-                        <td>{{vendor.name}}</td>
-                        <td>{{vendor.phone}}</td>
-                        <td>{{vendor.email}}</td>
+                        <td>{{customer.name}}</td>
+                        <td>{{customer.phone}}</td>
+                        <td>{{customer.email}}</td>
                         <!-- <td><input type="checkbox" 
                           name="myTextEditBox" 
                           value={{menu.name}}
