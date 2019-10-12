@@ -1146,12 +1146,12 @@ app.post( '/v1/pline/:id', function( request, response ) {
   //   };
     const colorado = {
       type: 'Line',
-      coordinates: [
+      coordinates: [[
         [-102, 41],
         [-102, 37],
         [-109, 37],
         [-109, 41]
-      ]
+      ]]
     };
     console.log("post /v1/pline/2");
     var pline = { name: 'Denver', location: colorado }; 
