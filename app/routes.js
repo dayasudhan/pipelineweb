@@ -1203,7 +1203,7 @@ app.get( '/v1/plinemap/nearby', function( request, response ) {
 // Model.find({ loc: { $within: { $geometry: geojsonPoly }}})
 // // or
 // Model.where('loc').within.geometry(geojsonPoly)
-  return PlineModel.find({location:{ $within: { $geometry: geojsonPoly }}},function( err, order ) {
+  return PlineModel.find({'location.coordinates':{ $within: { $geometry: geojsonPoly }}},function( err, order ) {
       if( !err ) {
           return response.send( order );
       } else {
