@@ -1145,7 +1145,7 @@ app.post( '/v1/pline/:id', function( request, response ) {
   //     coordinates:request.body.coordinates 
   //   };
     const colorado = {
-      type: 'Polygon',
+      type: 'Line',
       coordinates: [[
         [-102, 41],
         [-102, 37],
