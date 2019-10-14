@@ -1173,7 +1173,19 @@ app.post( '/v1/plinemap/geowithin', function( request, response ) {
     [14.2538865,75.7388695],
     [14.1603438,75.6205914]
   ]];
-  var geojsonPoly = { type: 'Polygon', coordinates: request.body.coordinates};
+  var coordinates = [[
+    [request.body.northeastlatitude,request.body.northeastlongitude],
+    [request.body.northeastlatitude,request.body.southwestlongitude],
+    [request.body.southwestlatitude,request.body.southwestlongitude],
+    [request.body.southwestlatitude,request.body.northeastlongitude],
+    [request.body.northeastlatitude,request.body.northeastlongitude]
+  ]];
+  console.log(coordinates);
+//  { northeastlatitude: '14.1603438',
+//   northeastlongitude: '75.6205914',
+//   southwestlatitude: '14.0510405',
+//   southwestlongitude: '75.7768592' }
+  var geojsonPoly = { type: 'Polygon', coordinates: coordinatess};
   console.log(geojsonPoly);
   return PlineModel.find({'location.coordinates':{ $within: { $geometry: geojsonPoly }}},function( err, order ) {
       if( !err ) {
