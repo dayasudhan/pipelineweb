@@ -1138,7 +1138,24 @@ app.get( '/v1/pipelinemap/all', function( request, response ) {
 app.post( '/v1/pline/:id', function( request, response ) {
    console.log("post /v1/pline");
    console.log(request.body);
- 
+   console.log(request.body.coordinates);
+  //  var coordinates = [[
+  //   [request.body.northeastlatitude,request.body.northeastlongitude],
+  //   [request.body.northeastlatitude,request.body.southwestlongitude],
+  //   [request.body.southwestlatitude,request.body.southwestlongitude],
+  //   [request.body.southwestlatitude,request.body.northeastlongitude],
+  //   [request.body.northeastlatitude,request.body.northeastlongitude]
+  // ]];
+  var ar = [];
+   for(var i = 0; i < request.body.coordinates.length ; i++)
+   {
+     var cord = [request.body.coordinates[i].latitude ,request.body.coordinates[i].longitude];
+     ar.push(cord);
+     console.log("11",cord);
+   }
+
+   console.log("22",ar);
+   request.body.coordinates = ar;
     var pline = { name: request.body.name, location: request.body }; 
         var pipeline = new PlineModel(pline);
        console.log("post /v1/pline/1");
