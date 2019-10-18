@@ -1166,13 +1166,13 @@ app.get( '/v1/plinemap/all', function( request, response ) {
 });
 app.post( '/v1/plinemap/geowithin', function( request, response ) {
   console.log(request.body);
-  var colordo = [[
-    [14.1603438,75.6205914],
-    [14.0697727,75.6018832],
-    [14.0510405,75.7768592],
-    [14.2538865,75.7388695],
-    [14.1603438,75.6205914]
-  ]];
+  // var colordo = [[
+  //   [14.1603438,75.6205914],
+  //   [14.0697727,75.6018832],
+  //   [14.0510405,75.7768592],
+  //   [14.2538865,75.7388695],
+  //   [14.1603438,75.6205914]
+  // ]];
   var coordinates = [[
     [request.body.northeastlatitude,request.body.northeastlongitude],
     [request.body.northeastlatitude,request.body.southwestlongitude],
