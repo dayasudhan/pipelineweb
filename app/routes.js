@@ -1139,7 +1139,7 @@ app.post( '/v1/pline/:id', function( request, response ) {
    console.log("post /v1/pline");
    console.log(request.body);
    console.log(request.body.coordinates);
-   console.log("post /v1/pline/122");
+  
   //  var coordinates = [[
   //   [request.body.northeastlatitude,request.body.northeastlongitude],
   //   [request.body.northeastlatitude,request.body.southwestlongitude],
@@ -1152,14 +1152,14 @@ app.post( '/v1/pline/:id', function( request, response ) {
    {
      var cord = [request.body.coordinates[i].latitude ,request.body.coordinates[i].longitude];
      ar.push(cord);
-     console.log("post /v1/pline/13333");
-     console.log(cord);
+     
    }
-   console.log("post /v1/pline/1222333");
+  
    console.log(ar);
-   console.log("post /v1/pline/11212312312");
+   
    request.body.coordinates = ar;
-    var pline = { name: request.body.name, location: request.body }; 
+   var phoneNumber = parseInt(req.body.phone);
+    var pline = { name: request.body.name, phone: phoneNumber, paid: request.body.paid,location: request.body }; 
         var pipeline = new PlineModel(pline);
        console.log("post /v1/pline/1");
       return pipeline.save(function( err) {
