@@ -1140,13 +1140,6 @@ app.post( '/v1/pline/:id', function( request, response ) {
    console.log(request.body);
    console.log(request.body.coordinates);
   
-  //  var coordinates = [[
-  //   [request.body.northeastlatitude,request.body.northeastlongitude],
-  //   [request.body.northeastlatitude,request.body.southwestlongitude],
-  //   [request.body.southwestlatitude,request.body.southwestlongitude],
-  //   [request.body.southwestlatitude,request.body.northeastlongitude],
-  //   [request.body.northeastlatitude,request.body.northeastlongitude]
-  // ]];
   var ar = [];
    for(var i = 0; i < request.body.coordinates.length ; i++)
    {
@@ -1158,7 +1151,7 @@ app.post( '/v1/pline/:id', function( request, response ) {
    console.log(ar);
    
    request.body.coordinates = ar;
-   var phoneNumber = parseInt(req.body.phone);
+   var phoneNumber = parseInt(request.body.phone);
     var pline = { name: request.body.name, phone: phoneNumber, paid: request.body.paid,location: request.body }; 
         var pipeline = new PlineModel(pline);
        console.log("post /v1/pline/1");
