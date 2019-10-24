@@ -13,6 +13,9 @@ const LineSchema = new mongoose.Schema({
   
   const PLineSchema = new mongoose.Schema({
     name: String,
+    phone:Number, 
+    paid:Number,
+    username:String,
     location: LineSchema
   });
 
