@@ -3,18 +3,9 @@ var VendorInfoModel = require('../app/models/VendorInfo');
 var CustomerInfoModel = require('../app/models/CustomerInfo');
 var PlineModel = require('../app/models/LineInfo');
 var CountersModel = require('../app/models/counters');
-var AWS = require('aws-sdk');
-var multer = require('multer');
-var multerS3 = require('multer-s3');
-var path = require('path');
-var Client = require('node-rest-client').Client;
-var client = new Client();
-var admin = require("firebase-admin");
-var firebase = require("firebase");
-//AWS.config.loadFromPath('./config.json');
-var s3 = new AWS.S3();
+//var AWS = require('aws-sdk');
+// var multer = require('multer');
 
-//var upload = multer({ storage: options });
 
 var securecustomerkey = 'EjR7tUPWx7WhsVs9FuVO6veFxFISIgIxhFZh6dM66rs';
 var securevendorkey = 'ORql2BHQq9ku8eUX2bGHjFmurqG84x2rkDQUNq9Peelw';
@@ -26,92 +17,7 @@ var client_key_customer = 'bhoomika';
 var client_key_admin = 'gajanuru';
 var client_key_web = 'pickcock';
 
-var upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'chunavane',
-        acl: 'public-read',
-        key: function (req, file, cb) {
-          var filesuffix = "image";
-          console.log(file);
-          if(file.mimetype.startsWith("video"))
-          {
-              filesuffix = "video/main";
-              cb(null, req.params.id + '/' +filesuffix+ Date.now() + path.extname(file.originalname));
-          }
-          else if(file.mimetype.startsWith("image"))
-          {
-               filesuffix = "image/main";
-               cb(null, req.params.id + '/' +filesuffix+ Date.now() + path.extname(file.originalname));
-          }
-          else if(file.mimetype.startsWith("audio"))
-          {
-
-               filesuffix = "audio/main";
-               cb(null, req.params.id + '/' +filesuffix+ Date.now() + path.extname(file.originalname));
-          }
-          else
-           {
-            console.log("invalid file format") 
-           } 
-        }
-    })
-});
-var uploadscroll = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'chunavane',
-        acl: 'public-read',
-        key: function (req, file, cb) {
-            console.log(file);
-            if(file.mimetype.startsWith("image"))
-            {
-              cb(null, req.params.id + '/' + 'scroll'+'/'+ 'main' + Date.now() + path.extname(file.originalname)); //use Date.now() for unique file keys
-            }
-            else
-            {
-             console.log("invalid file format") 
-            } 
-        }
-    })
-});
-
-var uploadsuggestion = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: 'chunavane',
-        acl: 'public-read',
-        key: function (req, file, cb) {
-            console.log(file);
-            cb(null, req.params.id + '/' + 'suggestion'+'/'+ 'main' + Date.now() + path.extname(file.originalname)); //use Date.now() for unique file keys
-        }
-    })
-});
-var serviceAccount = require('../election-b8219-firebase-adminsdk-0t0lc-485d2e37ad.json');
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://election-b8219.firebaseio.com"
-})
-
-// var serviceAccount2 = require('../kumarannajds-firebase-adminsdk-nzaxn-2da5c6c6e9.json');
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount2),
-//   databaseURL: "https://kumarannajds.firebaseio.com"
-// })
-
-
-var config = {
-  apiKey: "AIzaSyDPveny7Zzop7u4eW4zZefIyxwYJCgH8ro",
-  authDomain: "election-b8219.firebaseapp.com",
-  databaseURL: "https://election-b8219.firebaseio.com",
-  storageBucket: "election-b8219.appspot.com",
-  projectId: "election-b8219"
-};
-firebase.initializeApp(config);
-var rootRef = firebase.database().ref();
 module.exports = function(app, passport) {
-
-
 
 // normal routes ===============================================================
 
@@ -384,96 +290,6 @@ function registerVendor(req, res, next) {
     });
 };
 
-app.delete( '/v1/scrollimages/:id/:imageid', function( request, response ) {
-  console.log("delete --/v1/feed/info/");
-  console.log(request.params.id);
-  console.log(request.params.imageid);
-return VendorInfoModel.update( { 'username':request.params.id},
-          { $pull: {scrollimages: {"_id": request.params.imageid }}},
-          function( err ) {
-            if( !err ) {
-                console.log( 'post removed' );
-                return response.send( 'Successfully removed' );
-            } else {
-                console.log( err );
-                return response.send('ERROR');
-            }
-        });
-    //});
-});
-app.get( '/v1/feed/images/:id', function( request, response ) {
-    console.log("GET --/v1/feed/images/");
-
-    return VendorInfoModel.find({ 'username':request.params.id},
-      function( err, vendor ) {
-        if( !err ) {
-            console.log(vendor);
-            var new_menu_array = [];
-            var new_feed_images_array = [];
-            for (var j = 0; j < vendor.length; j++) {
-              var menu_array ;
-              menu_array = vendor[j].newsfeed;
-              
-              for (var i = menu_array.length - 1 ; i >= 0; i--) {
-
-                      new_menu_array.push(menu_array[i]);
-                      var feed_images = menu_array[i].feedimages;
-                      if(feed_images != null)
-                      {
-                      for (var k = feed_images.length - 1 ; k >= 0; k--) {
-                            new_feed_images_array.push(feed_images[k]);
-                        }
-                      }
-                     }
-             
-            }
-            return response.send( new_feed_images_array );
-        } else {
-            console.log( err );
-            return response.send('ERROR');
-        }
-    });
-});
-
-app.get( '/v1/feed/videos/:id', function( request, response ) {
-    console.log("GET --/v1/feed/videos/");
-
-    return VendorInfoModel.find({ 'username':request.params.id},
-      function( err, vendor ) {
-        if( !err ) {
-            console.log(vendor);
-           
-            var new_feed_images_array = [];
-            for (var j = 0; j < vendor.length; j++) {
-              var menu_array ;
-              menu_array = vendor[j].newsfeed;
-              
-              for (var i = menu_array.length - 1 ; i >= 0; i--) {
-
-                    
-                    var feed_videos = menu_array[i].feedvideos;
-                    var feed_audios = menu_array[i].feedaudios;
-
-                    var feed_youtubevideos = menu_array[i].feedvideo;
-                    if (feed_youtubevideos != null && feed_youtubevideos != "") 
-                    {
-                          new_feed_images_array.push(menu_array[i]);
-                    }
-                    else if((feed_videos != null  && feed_videos.length > 0)|| 
-                      (feed_audios != null && feed_audios.length > 0))
-                    {
-                          new_feed_images_array.push(menu_array[i]);
-                    }
-             }
-          }
-            return response.send( new_feed_images_array );
-        } else {
-            console.log( err );
-            return response.send('ERROR');
-        }
-    });
-});
- 
 app.get( '/v1/admin/account/all', function( request, response ) {
 
     return VendorInfoModel.find(function( err, order ) {

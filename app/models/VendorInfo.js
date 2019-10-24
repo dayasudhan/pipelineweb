@@ -3,10 +3,7 @@ var mongoose = require('mongoose');
 var VendorInfoSchema = new mongoose.Schema({
 	name:String,
     username:String,
-  
-
     email: String,
-
     id:String,
     phone:Number, 
     address:{
