@@ -199,22 +199,9 @@ console.log(req.body);
       }
       req.logIn(user, function(err) {
         if (err) { return next(err); }
-     //   console.log(req.body.role);
-   //     var redirect_url;
-        // if(req.body.role == 'customer')
-        // {
-       
-        //  return CustomerInfoModel.find({ 'phone':req.body.email},function( err, customerInfo ) {
-        //     if( !err ) {
-        //         return res.send( customerInfo );
-        //     } else {
-        //         console.log( err );
-        //         return res.send('ERROR');
-        //     }
-        // });
  
         return res.send("1");
-        
+      
        
       });
     })(req, res, next);
@@ -606,56 +593,6 @@ app.post( '/v1/pn/register', function( request, response ) {
         }
 
 });
-app.get( '/v1/pn/vendor/addTofirebase', function( request, response ) {
-    console.log("post v1/pn/vendor/addTofirebase");
-    console.log(request.body);
- 
-    //if( request.body.message ) {
-            console.log('success');
-            var pn = {};
-            pn["hdk"]  = {
-                info:"request.body.message"
-            };
-            console.log(pn); // should print  Object { name="John"}
-              rootRef.update(
-               pn
-             );
-
-            return response.send(pn);
-
-     
-
-});
-app.get( '/v1/pn/customer/fcm/:id', function( request, response ) {
-      console.log("post v1/pn/customer/addTofirebase");
-     
-      var topic = request.params.id;
-
-// See the "Defining the message payload" section below for details
-// on how to define a message payload.
-      var payload = {
-       notification: {
-        title: "Hello World2! ",
-        icon: "appicon",
-        
-        body: "Here is a not2222ification's body.",
-    },
-  data: {
-       image: "https://s3.ap-south-1.amazonaws.com/chunavane/hdk/images.jpg"
-  }
-      };  
-      admin.messaging().sendToTopic(topic, payload)
-      .then(function(response2) {
-        // See the MessagingTopicResponse reference documentation for the
-        // contents of response.
-        console.log("Successfully sent message:", response2);
-        response.send(response2);
-      })
-      .catch(function(error) {
-        console.log("Error sending message:", error);
-      });
-    });
-
 app.delete( '/v1/admin/counters/:id', function( request, response ) {
         return CountersModel.remove( { '_id':request.params.id},function( err ) {
             if( !err ) {
