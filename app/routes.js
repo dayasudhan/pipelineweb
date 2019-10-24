@@ -1,21 +1,7 @@
-var GeoJSON = require('mongoose-geojson-schema');
 var VendorInfoModel = require('../app/models/VendorInfo');
 var CustomerInfoModel = require('../app/models/CustomerInfo');
 var PlineModel = require('../app/models/LineInfo');
 var CountersModel = require('../app/models/counters');
-//var AWS = require('aws-sdk');
-// var multer = require('multer');
-
-
-var securecustomerkey = 'EjR7tUPWx7WhsVs9FuVO6veFxFISIgIxhFZh6dM66rs';
-var securevendorkey = 'ORql2BHQq9ku8eUX2bGHjFmurqG84x2rkDQUNq9Peelw';
-var secureadminkey = 'tk0M6HKn0uzL%2FcWMnq3jkeF7Ao%2BtdWyYEJqPDl0P6Ac';
-var securewebkey = 'RN4CDXkqltLF%2FWloegKujIhiaSWBrgCzQXqI9cyWpT0';
-var version_value_1 = '1';
-var client_key_vendor = 'tunga';
-var client_key_customer = 'bhoomika';
-var client_key_admin = 'gajanuru';
-var client_key_web = 'pickcock';
 
 module.exports = function(app, passport) {
 
@@ -25,7 +11,6 @@ module.exports = function(app, passport) {
 app.get('/test', function(req, res) {
     res.send('index.ejs');
 });
-
 
 // LOGOUT ==============================
 app.get('/logout', function(req, res) {
@@ -578,21 +563,6 @@ function getNextSequence(name,result)
 
 }
 
-
-app.post( '/v1/pn/register', function( request, response ) {
-    console.log("post v1/pn/register");
-    console.log(request.body);
- 
-    if( 1 ) {
-            console.log('success');
-            
-            return response.send('success');
-        } else {
-            console.log( 'failure' );
-            return response.send('failure');
-        }
-
-});
 app.delete( '/v1/admin/counters/:id', function( request, response ) {
         return CountersModel.remove( { '_id':request.params.id},function( err ) {
             if( !err ) {
@@ -605,56 +575,6 @@ app.delete( '/v1/admin/counters/:id', function( request, response ) {
         });
     //});
 });
-
-function checkVendorApiAunthaticated(request,type)
-{
-  console.log("checkVendorApiAunthaticated 1");
-  console.log(request.headers);
-  console.log(request.headers.version);
-  var version = parseInt(request.headers.version);
-  console.log(version);
-  var ret = false; 
-  if(request.headers.securekey == secureadminkey && request.headers.client == client_key_admin)
-  {
-    console.log("checkVendorApiAunthaticated admin");
-    ret = true;
-  }
-  else if(request.headers.securekey == securewebkey &&
-          request.headers.version == version_value_1 && 
-          request.headers.client == client_key_web)
-  {
-    console.log("checkVendorApiAunthaticated web pass");
-    ret = true;
-  }
-  else if(type == 1)
-  {
-    console.log("checkVendorApiAunthaticated vendor");
-    if(request.headers.securekey == securevendorkey &&
-            request.headers.version == version_value_1 && 
-            request.headers.client == client_key_vendor)
-    {
-      console.log("checkVendorApiAunthaticated vendor pass");
-      ret = true;
-    }
-  }
-  else if(type == 2)
-  {
-    console.log("checkVendorApiAunthaticated cust");
-    if(request.headers.securekey == securecustomerkey &&
-            request.headers.version == version_value_1 && 
-            request.headers.client == client_key_customer)
-    {
-      console.log("checkVendorApiAunthaticated cust pass");
-      ret = true;
-    }
-  }
-  else
-  {
-    console.log("checkVendorApiAunthaticated not auth");
-    ret = false;
-  }
-  return ret;
-}
 
 
 };
