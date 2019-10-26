@@ -466,7 +466,11 @@ app.post( '/v1/pline/:id', function( request, response ) {
    
    request.body.coordinates = ar;
    var phoneNumber = parseInt(request.body.phone);
-    var pline = { name: request.body.name, phone: phoneNumber, paid: request.body.paid,location: request.body }; 
+    var pline = { name: request.body.name, 
+      phone: phoneNumber, paid: 
+      request.body.paid,
+      vendor_username:request.body.vendorusername,
+      location: request.body }; 
         var pipeline = new PlineModel(pline);
        console.log("post /v1/pline/1");
       return pipeline.save(function( err) {

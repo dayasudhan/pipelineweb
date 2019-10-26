@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 //Schema
 var PipelineSchema = new mongoose.Schema({
 	name:String,
-    username:String,
+    vendor_username:String,
     id:String,
     phone:Number, 
     paid:Number,
