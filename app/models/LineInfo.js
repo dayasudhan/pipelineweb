@@ -15,7 +15,7 @@ const LineSchema = new mongoose.Schema({
     name: String,
     phone:Number, 
     paid:Number,
-    username:String,
+    vendor_username:String,
     location: LineSchema
   });
 
