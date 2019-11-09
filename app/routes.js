@@ -495,6 +495,18 @@ app.get( '/v1/plinemap/all', function( request, response ) {
       }
   });
 });
+app.get( '/v1/plinemap/:id', function( request, response ) {
+  console.log(request.body);
+  console.log(request.params.id);
+    return PlineModel.find({'vendor_username':request.params.id},function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
 app.post( '/v1/plinemap/geowithin', function( request, response ) {
   console.log(request.body);
   // var colordo = [[
