@@ -495,6 +495,18 @@ app.get( '/v1/plinemap/all', function( request, response ) {
       }
   });
 });
+app.get( '/v1/plinemap/phone/:id', function( request, response ) {
+  console.log(request.body);
+  console.log(request.params.id);
+    return PlineModel.find({'phone':request.params.id},function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
 app.get( '/v1/plinemap/:id', function( request, response ) {
   console.log(request.body);
   console.log(request.params.id);
