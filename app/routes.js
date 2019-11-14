@@ -462,9 +462,10 @@ app.post( '/v1/pline/:id', function( request, response ) {
      
    }
    console.log(ar);
-   var indiantime = new Date();
-   indiantime.setHours(indiantime.getHours() + 5);
-   indiantime.setMinutes(indiantime.getMinutes() + 30);
+   var indiantime = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());;
+  // indiantime.setHours(indiantime.getHours() + 5);
+  // indiantime.setMinutes(indiantime.getMinutes() + 30);
+   //new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
    console.log(indiantime);
    request.body.coordinates = ar;
    var phoneNumber = parseInt(request.body.phone);
