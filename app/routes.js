@@ -475,7 +475,7 @@ app.post( '/v1/pline/:id', function( request, response ) {
       date:indiantime,
       size:request.body.size,
       remarks:request.body.remarks,
-      pipe_type:request.body.type,
+      pipe_type:request.body.pipe_type,
       purpose:request.body.purpose,
       location: request.body }; 
       var pipeline = new PlineModel(pline);
