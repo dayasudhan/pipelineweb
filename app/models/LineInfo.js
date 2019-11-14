@@ -16,6 +16,11 @@ const LineSchema = new mongoose.Schema({
     phone:Number, 
     paid:Number,
     vendor_username:String,
+    date:String,
+    size:String,
+    remarks:String,
+    type:String,
+    purpose:String,
     location: LineSchema
   });
 

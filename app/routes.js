@@ -452,7 +452,7 @@ app.post( '/v1/admin/counters/:id', function( request, response ) {
 app.post( '/v1/pline/:id', function( request, response ) {
    console.log("post /v1/pline");
    console.log(request.body);
-   console.log(request.body.coordinates);
+   //console.log(request.body.coordinates);
   
   var ar = [];
    for(var i = 0; i < request.body.coordinates.length ; i++)
@@ -461,18 +461,25 @@ app.post( '/v1/pline/:id', function( request, response ) {
      ar.push(cord);
      
    }
-  
    console.log(ar);
-   
+   var indiantime = new Date();
+   indiantime.setHours(indiantime.getHours() + 5);
+   indiantime.setMinutes(indiantime.getMinutes() + 30);
+   console.log(indiantime);
    request.body.coordinates = ar;
    var phoneNumber = parseInt(request.body.phone);
     var pline = { name: request.body.name, 
-      phone: phoneNumber, paid: 
-      request.body.paid,
+      phone: phoneNumber, 
+      paid:request.body.paid,
       vendor_username:request.body.vendorusername,
+      date:indiantime,
+      size:request.body.size,
+      remarks:request.body.remarks,
+      type:request.body.type,
+      purpose:request.body.purpose,
       location: request.body }; 
-        var pipeline = new PlineModel(pline);
-       console.log("post /v1/pline/1");
+      var pipeline = new PlineModel(pline);
+      console.log("post /v1/pline/1");
       return pipeline.save(function( err) {
       if( !err ) {
           console.log("no error");
