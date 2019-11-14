@@ -19,7 +19,7 @@ const LineSchema = new mongoose.Schema({
     date:String,
     size:String,
     remarks:String,
-    type:String,
+    pipe_type:String,
     purpose:String,
     location: LineSchema
   });
