@@ -462,18 +462,23 @@ app.post( '/v1/pline/:id', function( request, response ) {
      
    }
    console.log(ar);
-   var indiantime = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());;
-  // indiantime.setHours(indiantime.getHours() + 5);
-  // indiantime.setMinutes(indiantime.getMinutes() + 30);
+   var indiantime = new Date();;
+   indiantime.setHours(indiantime.getHours() + 5);
+   indiantime.setMinutes(indiantime.getMinutes() + 30);
    //new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
    console.log(indiantime);
+  
+var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+var newtime = months[indiantime.getMonth()] + " " +  indiantime.getDate() + " " + indiantime.getFullYear();
+console.log(newtime);
    request.body.coordinates = ar;
    var phoneNumber = parseInt(request.body.phone);
     var pline = { name: request.body.name, 
       phone: phoneNumber, 
       paid:request.body.paid,
       vendor_username:request.body.vendorusername,
-      date:indiantime,
+      date:newtime,
       size:request.body.size,
       remarks:request.body.remarks,
       pipe_type:request.body.pipe_type,
