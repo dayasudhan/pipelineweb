@@ -21,6 +21,7 @@ const LineSchema = new mongoose.Schema({
     remarks:String,
     pipe_type:String,
     purpose:String,
+    live:String,
     location: LineSchema
   });
 
