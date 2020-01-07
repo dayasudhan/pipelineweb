@@ -124,10 +124,13 @@ app.get('/p/pcustomer_list', function (req, res) {
   res.render('pcustomer_list', { user : req.user });
 });
 app.get('/map', function (req, res) {
-  //console.log(req);
+  console.log("request");
+  console.log(req);
+  console.log("response");
+  console.log(res);
   //console.log(process.env.PORT);
   //console.log(res);
-  console.log(process.env.GOOGLE_API_KEY);
+  //console.log(process.env.GOOGLE_API_KEY);
   res.render('map.ejs', { message: req.flash('loginMessage') });
 });
 
