@@ -48,19 +48,29 @@
       }
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
     <script src="/javascripts/map.js"></script>
     <script>
-        
+//         function myFunction() {
+//   alert("myfunction");
+// }
+function addScript(callback ) {
+  var s = document.createElement( 'script' );
+  var src ="https://maps.googleapis.com/maps/api/js?key="
+  //var key  ="AIzaSyAiBFQfsRyZeCy80ACyNIwNOFNX0Sa0w5c";
+  var key = "<%= key %>"
+  var src3 = src + key;
+ 
+  s.setAttribute( 'src', src3 );
 
+  document.body.appendChild( s );
+  s.onload=callback
+}
     </script>
   </head>
-  <body ng-app="mapModule" ng-controller="mapController">
-    
-    
+  <body ng-app="mapModule"  onload="addScript()" ng-controller="mapController">
+
     <div id="floating-panel">
-     
-      
+      <input ng-click ="initinalizeline();" type=button value="Initinalize">
       <input ng-click ="previousLine();" type=button value="Previous Line">
       <input ng-click ="nextLine();" type=button value="Next Line">
       <input ng-click ="allLines();" type=button value="All Lines">
@@ -68,10 +78,11 @@
       <input ng-click ="addLine();" type=button value="Add Line">
       <input ng-click ="removeLine();" type=button value="Remove line">
       <input ng-click ="drawnewLine();" type=button value="Draw Newline">
+      
     </div>
     <div id="map" >
      
-        <header  class="main-header" data-ng-init="initinalizeline()"  >       
+        <header  class="main-header" >       
       </header>
         
     </div>

@@ -131,7 +131,9 @@ app.get('/map', function (req, res) {
   //console.log(process.env.PORT);
   //console.log(res);
   console.log(process.env.GOOGLE_API_KEY);
-  res.render('map.ejs', { message: req.flash('loginMessage') });
+ 
+  var key2  = process.env.GOOGLE_API_KEY;
+  res.render('map.ejs', { key: key2 });
 });
 
 app.get('/p/vendor_login', function (req, res) {

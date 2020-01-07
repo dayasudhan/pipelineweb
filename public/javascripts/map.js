@@ -160,12 +160,16 @@ angular.module("mapModule", [])
     
     $scope.allMultiLines = function()
     {
-      $scope.initinalizeline3()     ;         
+      $scope.initinalizeline3()     ;    
+    // $scope.getMapList();     
       
     }
     $scope.initinalizeline = function()
     {
-      $scope.getMapList()     ;         
+      //sleep(1000);
+      // const end = +(new Date()) + 10000;
+      // while( +(new Date()) < end ){ } 
+       $scope.getMapList();         
       
     }
     $scope.drawnewLine = function()
@@ -203,7 +207,7 @@ angular.module("mapModule", [])
     $scope.init = function()
     {
      
-      console.log(process.env);
+     // console.log(process.env);
       DeleteMenu.prototype = new google.maps.OverlayView();
 
         DeleteMenu.prototype.onAdd = function() {
