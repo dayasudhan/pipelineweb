@@ -493,6 +493,7 @@ console.log(newtime);
       remarks:request.body.remarks,
       pipe_type:request.body.pipe_type,
       purpose:request.body.purpose,
+      live:request.body.live,
       location: request.body }; 
       var pipeline = new PlineModel(pline);
       console.log("post /v1/pline/1");
@@ -541,6 +542,7 @@ console.log(newtime);
      remarks:request.body.remarks,
      pipe_type:request.body.pipe_type,
      purpose:request.body.purpose,
+     live:request.body.live,
      location: request.body }; 
      var pipeline = new PlineModel(pline);
      console.log("post /v1/pline/1");
@@ -584,6 +586,18 @@ app.get( '/v1/plinemap/phone/:id', function( request, response ) {
   console.log(request.body);
   console.log(request.params.id);
     return PlineModel.find({'phone':request.params.id},function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
+app.get( '/v1/plinemap/phonelive/:id/:live', function( request, response ) {
+  console.log(request.body);
+  console.log(request.params.id);
+    return PlineModel.find({'live':request.params.id},function( err, order ) {
       if( !err ) {
           return response.send( order );
       } else {

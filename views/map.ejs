@@ -56,12 +56,9 @@
 function addScript(callback ) {
   var s = document.createElement( 'script' );
   var src ="https://maps.googleapis.com/maps/api/js?key="
-  //var key  ="AIzaSyAiBFQfsRyZeCy80ACyNIwNOFNX0Sa0w5c";
   var key = "<%= key %>"
   var src3 = src + key;
- 
   s.setAttribute( 'src', src3 );
-
   document.body.appendChild( s );
   s.onload=callback
 }
@@ -78,7 +75,8 @@ function addScript(callback ) {
       <input ng-click ="addLine();" type=button value="Add Line">
       <input ng-click ="removeLine();" type=button value="Remove line">
       <input ng-click ="drawnewLine();" type=button value="Draw Newline">
-      
+      <input ng-click ="postLine();" type=button value="Postline">
+      <input ng-click ="finalLine();" type=button value="Finalline">
     </div>
     <div id="map" >
      
