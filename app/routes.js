@@ -2,7 +2,10 @@ var VendorInfoModel = require('../app/models/VendorInfo');
 var CustomerInfoModel = require('../app/models/CustomerInfo');
 var PlineModel = require('../app/models/LineInfo');
 var CountersModel = require('../app/models/counters');
-
+const googleMapsClient = require('@google/maps').createClient({
+  key: 'AIzaSyAiBFQfsRyZeCy80ACyNIwNOFNX0Sa0w5c',
+  Promise: Promise
+});
 module.exports = function(app, passport) {
 
 // normal routes ===============================================================
@@ -507,6 +510,101 @@ console.log(newtime);
           return response.send('ERROR');
       }
   });
+});
+app.get( '/v1/elevation', function( request, response ) {
+  googleMapsClient.elevation({
+    locations:  [ '14.4201106,74.0684507'],  //latlong format
+
+  }).asPromise().then((response) => {
+    console.log(response.json.results)
+  })
+    .catch(err => console.log(err));
+});
+app.get( '/v1/elevationpath', function( request, response ) {
+  googleMapsClient.elevationAlongPath({
+    path: ['14.1460526,75.68239130000006|14.1444515,75.67876219999994|14.1426074,75.67759909999995|14.1369133,75.67317609999998| 14.1368819,75.67534799999999'],  //latlong format 
+    samples: 5
+  }).asPromise().then((response) => {
+    console.log(response.json.results)
+  })
+    .catch(err => console.log(err));
+});
+app.post( '/v1/plinewithelevation/:id', function( request, response ) {
+  console.log("post /v1/pline2");
+  console.log(request.body);
+  //console.log(request.body.coordinates);
+ 
+ var ar = [];
+ var path1 = '';
+ for(var i = 0; i < request.body.coordinates.length ; i++)
+ {
+   var cord = [request.body.coordinates[i][0] ,request.body.coordinates[i][1]];
+   ar.push(cord);
+   if((i+1) < request.body.coordinates.length)
+   {
+   path1  = path1 + request.body.coordinates[i][0] + '\,' + request.body.coordinates[i][1] + '\|';
+   }
+   else{
+    path1  = path1 + request.body.coordinates[i][0] + '\,' + request.body.coordinates[i][1] ;
+   }
+ }
+ console.log(path1);
+ console.log(request.body.coordinates.length);
+ var path2 =  '\'' +path1 + '\'' ;
+ console.log(path2);
+ var path3 = new String(path2);
+ console.log(path3);
+ googleMapsClient.elevationAlongPath({
+  path:  ar,
+  samples: request.body.coordinates.length
+}).asPromise().then((response) => {
+  console.log(response.json.results)
+})
+  .catch(err => console.log(err));
+
+
+  for(var i = 0; i < request.body.coordinates.length ; i++)
+  {
+    var cord = [request.body.coordinates[i][0] ,request.body.coordinates[i][1]];
+    ar.push(cord);
+    
+  }
+ // console.log(ar);
+  var indiantime = new Date();;
+  indiantime.setHours(indiantime.getHours() + 5);
+  indiantime.setMinutes(indiantime.getMinutes() + 30);
+  //new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+  console.log(indiantime);
+ 
+var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+var newtime = months[indiantime.getMonth()] + " " +  indiantime.getDate() + " " + indiantime.getFullYear();
+console.log(newtime);
+  request.body.coordinates = ar;
+  var phoneNumber = parseInt(request.body.phone);
+   var pline = { name: request.body.name, 
+     phone: phoneNumber, 
+     paid:request.body.paid,
+     vendor_username:request.body.vendorusername,
+     date:newtime,
+     size:request.body.size,
+     remarks:request.body.remarks,
+     pipe_type:request.body.pipe_type,
+     purpose:request.body.purpose,
+     live:request.body.live,
+     location: request.body }; 
+     var pipeline = new PlineModel(pline);
+     console.log("post /v1/pline/1");
+    //  return pipeline.save(function( err) {
+    //  if( !err ) {
+    //      console.log("no error");
+    //      console.log(pipeline);
+    //      return response.send(pipeline); 
+    //  } else {
+    //      console.log( err );
+    //      return response.send('ERROR');
+    //  }
+ //});
 });
 app.post( '/v1/pline2/:id', function( request, response ) {
   console.log("post /v1/pline2");

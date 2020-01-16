@@ -6,6 +6,7 @@ angular.module("mapModule", [])
      $scope.stringsArray = [];
      $scope.stringsArray2 = [[]];
      $scope.newPath = [];
+     $scope.elevationPath = [];
     $scope.flightPath = null;
     $scope.index = 0;
     var currStringIndex = 0;
@@ -103,7 +104,7 @@ angular.module("mapModule", [])
           $scope.postMapList = function (param) {
             console.log(param);
                 console.log("postMaplist");
-                var url3 = "/v1/pline2/b";
+                var url3 = "/v1/plinewithelevation/b";
                 var postData={coordinates:param,type:"Line",phone:"9566229075",live:"yes"};
                 $http.post(url3,postData)
                 .success(function (data, status, headers, config)
@@ -380,24 +381,20 @@ angular.module("mapModule", [])
             });
 
             
-            // google.maps.event.addListener(flightPath, 'click', function(e) {
-            //     // Check if click was on a vertex control point
-            //     if (e.vertex == undefined) {
-            //       return;
-            //     }
-            //     $scope.deleteMenu.open(map, flightPath.getPath(), e.vertex);
-            //   });
-              google.maps.event.addListener(flightPath, 'click', function(e) {
-                console.log('addListener');
-               //  console.log(e);
-               //  console.log(e.getL));
-               //  console.log(e.log);
-                  // Check if click was on a vertex control point
+            google.maps.event.addListener(flightPath, 'rightclick', function(e) {
+                  console.log('addListener');
                   if (e.vertex == undefined) {
                     return;
                   }
                   $scope.onclickaddpoints(flightPath.getPath().getAt(e.vertex));
-                  //$scope.deleteMenu.open(map, flightPath.getPath(), e.vertex);
+              });
+              google.maps.event.addListener(flightPath, 'click', function(e) {
+                console.log('addListener');
+                           if (e.vertex == undefined) {
+                    return;
+                  }
+                  $scope.onclickaddpoints(flightPath.getPath().getAt(e.vertex));
+         
                 });
          
         }
