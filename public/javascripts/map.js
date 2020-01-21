@@ -160,7 +160,7 @@ angular.module("mapModule", [])
     }
     $scope.addLine = function (){
      
-        var path = flightPath.getPath();flightPath
+        var path = flightPath.getPath();
         var path2 = flightPath2.getPath();
         var length =  path.getLength()
         var coord = [];
@@ -370,7 +370,7 @@ angular.module("mapModule", [])
             var map = new google.maps.Map(document.getElementById('map'), mapOptions);
      
            
-            console.log($scope.index);
+            //console.log($scope.index);
             flightPath= new google.maps.Polyline({
                 path: pipelinepath,
                 editable: true,
