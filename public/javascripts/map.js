@@ -56,6 +56,52 @@ angular.module("mapModule", [])
                
               });
           };
+
+          $scope.getMapListPhone = function (param) {
+            console.log(param);
+                console.log("getMaplist");
+                var url3 = "/v1/plinemap/phone/";
+                url3 = url3 + param;
+                $http.get(url3)
+                  .success(function (data, status, headers, config)
+                  {
+                    $scope.stringsArray = data;
+                   console.log();
+                   // var data = $scope.stringsArray
+                
+                    var length = data.length;
+                    var line = [];
+                   
+                    for (var i = 0; i < length; i++)
+                    {
+                        var ar = data[i];
+                         var length2 = ar.location.coordinates.length;
+                         line = [];
+                        for (var j = 0; j < length2; j++)
+                        {
+                            var  coord = new google.maps.LatLng(ar.location.coordinates[j][0],
+                                ar.location.coordinates[j][1]);
+                                line.push(coord);
+                              
+                           //   j = j + 1;
+                        }
+                        $scope.stringsArray2[i] = line;
+                    //     console.log(line);
+                    //  console.log($scope.stringsArray2[i]);
+        
+                    }
+                    //console.log($scope.stringsArray2[0]);
+                    //console.log($scope.stringsArray2[1]);
+                    $scope.init();
+                    $scope.initinalizeline2($scope.stringsArray2[$scope.index]);
+                    
+                  })
+                  .error(function (data, status, headers, config)
+                  {
+                    $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
+                   
+                  });
+              };
           $scope.getMapList2 = function (param) {
             console.log(param);
                 console.log("getMaplist");
@@ -105,7 +151,29 @@ angular.module("mapModule", [])
             console.log(param);
                 console.log("postMaplist");
                 var url3 = "/v1/plinewithelevation/b";
-                var postData={coordinates:param,type:"Line",phone:"9566229075",live:"yes"};
+                // var postData={coordinates:param,type:"Line",phone:"9900324201",live:"yes",
+                //               name:"Ganeshappa",size:"4 Inch",
+                //               remarks:"",
+                //               pipe_type:"PVC",
+                //               purpose:"Irrigation"};
+                //               var txt;
+                var person = prompt("Please enter customer name:", "");
+                var phone = prompt("Please enter customer phone:", "");
+                var size = prompt("Please enter Pipe Size :", "");
+                if (person == null || person == "") {
+                  txt = "User cancelled the prompt.";
+                } else {
+                  var postData={coordinates:param,type:"Line",
+                              phone:phone,
+                              live:"yes",
+                              name:person,
+                              size:size,
+                              remarks:"",
+                              pipe_type:"PVC",
+                              purpose:"Irrigation"};
+                              var txt;
+                }
+                console.log(postData);
                 $http.post(url3,postData)
                 .success(function (data, status, headers, config)
                 {
@@ -210,6 +278,10 @@ angular.module("mapModule", [])
     $scope.initinalizeline = function()
     {
       $scope.getMapList();     
+    }
+    $scope.initinalizelinewithphone = function()
+    {
+      $scope.getMapListPhone();     
     }
     $scope.finalLine = function()
     {

@@ -3,7 +3,7 @@ var CustomerInfoModel = require('../app/models/CustomerInfo');
 var PlineModel = require('../app/models/LineInfo');
 var CountersModel = require('../app/models/counters');
 const googleMapsClient = require('@google/maps').createClient({
-  key: 'AIzaSyBagcn3yw7MMqCw6zvLbsG-cV3ptgnR8z8',
+  key: process.env.GOOGLE_API_KEY,
   Promise: Promise
 });
 module.exports = function(app, passport) {
@@ -133,7 +133,7 @@ app.get('/map', function (req, res) {
   //console.log(res);
   //console.log(process.env.PORT);
   //console.log(res);
-  console.log(process.env.GOOGLE_API_KEY);
+  
  
   var key2  = process.env.GOOGLE_API_KEY;
   res.render('map.ejs', { key: key2 });
@@ -531,11 +531,11 @@ app.get( '/v1/elevationpath', function( request, response ) {
 });
 
 
-app.post( '/v1/plinewithelevation2/:id', function( request, response ) {
+// app.post( '/v1/plinewithelevation2/:id', function( request, response ) {
 
 
 
-});
+// });
 app.post( '/v1/plinewithelevation/:id', function( request, response ) {
   console.log("post /v1/pline2");
   console.log(request.body);
@@ -701,9 +701,27 @@ app.get( '/v1/plinemap/phone/:id', function( request, response ) {
       }
   });
 });
-app.get( '/v1/plinemap/phonelive/:id/:live', function( request, response ) {
+app.get( '/v1/plinemap/phonelive/:id/:phone', function( request, response ) {
   console.log(request.body);
   console.log(request.params.id);
+  console.log(request.params.phone);
+  var phoneNumber = parseInt(request.params.phone);
+  console.log(phoneNumber);
+    return PlineModel.find({'live':request.params.id,'phone':phoneNumber},function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
+app.get( '/v1/plinemap/phoneliveall/:id', function( request, response ) {
+  console.log(request.body);
+  console.log(request.params.id);
+  console.log(request.params.phone);
+  var phoneNumber = parseInt(request.params.phone);
+  console.log(phoneNumber);
     return PlineModel.find({'live':request.params.id},function( err, order ) {
       if( !err ) {
           return response.send( order );
