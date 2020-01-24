@@ -66,12 +66,12 @@ angular.module("mapModule", [])
                   .success(function (data, status, headers, config)
                   {
                     $scope.stringsArray = data;
-                   console.log();
+                   console.log(data);
                    // var data = $scope.stringsArray
-                
+                  
                     var length = data.length;
                     var line = [];
-                   
+                    console.log(length);
                     for (var i = 0; i < length; i++)
                     {
                         var ar = data[i];
