@@ -281,7 +281,8 @@ angular.module("mapModule", [])
     }
     $scope.initinalizelinewithphone = function()
     {
-      $scope.getMapListPhone();     
+      var phone = prompt("Please enter customer phone:", "");
+      $scope.getMapListPhone(phone);     
     }
     $scope.finalLine = function()
     {
