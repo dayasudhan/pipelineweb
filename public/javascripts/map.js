@@ -102,6 +102,51 @@ angular.module("mapModule", [])
                    
                   });
               };
+              $scope.getMapListPhonelive = function (param) {
+                console.log(param);
+                    console.log("getMaplist");
+                    var url3 = "/v1/plinemap/phonelive/yes/";
+                    url3 = url3 + param;
+                    $http.get(url3)
+                      .success(function (data, status, headers, config)
+                      {
+                        $scope.stringsArray = data;
+                       console.log(data);
+                       // var data = $scope.stringsArray
+                      
+                        var length = data.length;
+                        var line = [];
+                        console.log(length);
+                        for (var i = 0; i < length; i++)
+                        {
+                            var ar = data[i];
+                             var length2 = ar.location.coordinates.length;
+                             line = [];
+                            for (var j = 0; j < length2; j++)
+                            {
+                                var  coord = new google.maps.LatLng(ar.location.coordinates[j][0],
+                                    ar.location.coordinates[j][1]);
+                                    line.push(coord);
+                                  
+                               //   j = j + 1;
+                            }
+                            $scope.stringsArray2[i] = line;
+                        //     console.log(line);
+                        //  console.log($scope.stringsArray2[i]);
+            
+                        }
+                        //console.log($scope.stringsArray2[0]);
+                        //console.log($scope.stringsArray2[1]);
+                        $scope.init();
+                        $scope.initinalizeline2($scope.stringsArray2[$scope.index]);
+                        
+                      })
+                      .error(function (data, status, headers, config)
+                      {
+                        $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
+                       
+                      });
+                  };
           $scope.getMapList2 = function (param) {
             console.log(param);
                 console.log("getMaplist");
@@ -283,6 +328,11 @@ angular.module("mapModule", [])
     {
       var phone = prompt("Please enter customer phone:", "");
       $scope.getMapListPhone(phone);     
+    }
+    $scope.initinalizelinewithphonelive = function()
+    {
+      var phone = prompt("Please enter customer phone:", "");
+      $scope.getMapListPhonelive(phone);     
     }
     $scope.finalLine = function()
     {
