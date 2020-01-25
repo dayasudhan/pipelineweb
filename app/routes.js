@@ -731,7 +731,7 @@ app.get( '/v1/plinemap/phoneliveall/:id', function( request, response ) {
       }
   });
 });
-app.post( '/v1/plinemap/phoneliveall/geowithin', function( request, response ) {
+app.post( '/v1/plinemap/phoneliveall/geowithin/:id', function( request, response ) {
   console.log(request.body);
   var coordinates = [[
     [request.body.northeastlatitude,request.body.northeastlongitude],
