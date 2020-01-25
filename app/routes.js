@@ -731,6 +731,27 @@ app.get( '/v1/plinemap/phoneliveall/:id', function( request, response ) {
       }
   });
 });
+app.post( '/v1/plinemap/phoneliveall/geowithin', function( request, response ) {
+  console.log(request.body);
+  var coordinates = [[
+    [request.body.northeastlatitude,request.body.northeastlongitude],
+    [request.body.northeastlatitude,request.body.southwestlongitude],
+    [request.body.southwestlatitude,request.body.southwestlongitude],
+    [request.body.southwestlatitude,request.body.northeastlongitude],
+    [request.body.northeastlatitude,request.body.northeastlongitude]
+  ]];
+  console.log(coordinates);
+  var geojsonPoly = { type: 'Polygon', coordinates: coordinates};
+  console.log(geojsonPoly);
+  return PlineModel.find({'location.coordinates':{ $within: { $geometry: geojsonPoly }},'live':request.params.id},function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
 app.get( '/v1/plinemap/:id', function( request, response ) {
   console.log(request.body);
   console.log(request.params.id);
