@@ -146,6 +146,7 @@ angular.module("mapModule", [])
                         $scope.simpleGetCallResult = logResult("GET ERROR", data, status, headers, config);
                        
                       });
+                      
                   };
           $scope.getMapList2 = function (param) {
             console.log(param);

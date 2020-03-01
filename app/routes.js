@@ -2,6 +2,7 @@ var VendorInfoModel = require('../app/models/VendorInfo');
 var CustomerInfoModel = require('../app/models/CustomerInfo');
 var PlineModel = require('../app/models/LineInfo');
 var CountersModel = require('../app/models/counters');
+const parseGpx = require('parse-gpx');
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GOOGLE_API_KEY,
   Promise: Promise
@@ -743,6 +744,7 @@ app.post( '/v1/plinemap/phoneliveall/geowithin/:id', function( request, response
   console.log(coordinates);
   var geojsonPoly = { type: 'Polygon', coordinates: coordinates};
   console.log(geojsonPoly);
+  console.log(request.params.id);
   return PlineModel.find({'location.coordinates':{ $within: { $geometry: geojsonPoly }},'live':request.params.id},function( err, order ) {
       if( !err ) {
           return response.send( order );
@@ -751,6 +753,80 @@ app.post( '/v1/plinemap/phoneliveall/geowithin/:id', function( request, response
           return response.send('ERROR');
       }
   });
+});
+app.post( '/v1/geojsontojson', function( request, response ) {
+  console.log(request.body);
+  let file = './path/to/some.gpx';
+
+  
+  var filePath =request.body.filepath;
+  console.log(filePath);
+parseGpx(filePath).then(track => {
+  console.log(track);
+    console.log(track[0].latitude); // 43.512926660478115
+});
+    return response.send("OK");
+});
+
+app.post( '/v1/gpxtojson', function( request, response )  
+{
+  console.log("post /v1/gpxtojson");
+  console.log(request.body);
+  var filePath =request.body.filepath;
+  console.log(filePath);
+  var ar = [];
+  parseGpx(filePath).then(track => {
+    //console.log(track);
+      console.log(track.length); // 43.512926660478115
+      for(var i = 0; i < track.length ; i++)
+      {
+        var cord = [track[i].latitude ,track[i].longitude,track[i].elevation];
+        ar.push(cord);
+        console.log(i + " = " + cord); 
+       }
+       console.log(1,ar);
+ 
+
+    var indiantime = new Date();;
+    indiantime.setHours(indiantime.getHours() + 5);
+    indiantime.setMinutes(indiantime.getMinutes() + 30);
+    //new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+    console.log(indiantime);
+  
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+    var newtime = months[indiantime.getMonth()] + " " +  indiantime.getDate() + " " + indiantime.getFullYear();
+    console.log(newtime);
+    request.body.coordinates = ar;
+    var phoneNumber = parseInt(request.body.phone);
+     var pline = { name: request.body.name, 
+       phone: phoneNumber, 
+       paid:request.body.paid,
+       vendor_username:request.body.vendorusername,
+       date:newtime,
+       size:request.body.size,
+       remarks:request.body.remarks,
+       pipe_type:request.body.pipe_type,
+       purpose:request.body.purpose,
+       live:request.body.live,
+       location: request.body }; 
+       var pipeline = new PlineModel(pline);
+      
+       console.log("post /v1/gpxtojson");
+       console.log(pipeline);
+       return pipeline.save(function( err) {
+       if( !err ) {
+           console.log("no error");
+           console.log(pipeline);
+           return response.send(pipeline); 
+       } else {
+           console.log( err );
+           return response.send('ERROR');
+       }
+   });
+
+  });//parsegpx
+
 });
 app.get( '/v1/plinemap/:id', function( request, response ) {
   console.log(request.body);

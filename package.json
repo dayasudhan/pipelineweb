@@ -29,6 +29,7 @@
     "passport-google-oauth": "~0.1.5",
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2",
-    "s3-upload-stream": "*"
+    "s3-upload-stream": "*",
+    "parse-gpx": "1.2.0"
   }
 }
