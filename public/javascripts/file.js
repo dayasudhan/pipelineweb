@@ -7,6 +7,9 @@ angular.module("fileModule", [])
     $scope.fileName = '';
     $scope.submit = function () {
         console.log("submit");
+        console.log($scope.name);
+        console.log($scope.phone);
+        console.log($scope.file);
       var file = document.getElementById("myFileInput").files[0];
       if (file) {
         console.log("submit");
@@ -31,22 +34,18 @@ angular.module("fileModule", [])
                     //               pipe_type:"PVC",
                     //               purpose:"Irrigation"};
                     //               var txt;
-                    var person = prompt("Please enter customer name:", "");
-                    var phone = prompt("Please enter customer phone:", "");
+               
                     
-                    if (person == null || person == "") {
-                      txt = "User cancelled the prompt.";
-                    } else {
+       
                       var postData={content:aReader.result,
                        
-                                  phone:phone,
+                                  phone:$scope.phone,
                                 
-                                  name:person,
+                                  name:$scope.name,
                                 
                                   pipe_type:"PVC",
                                   purpose:"Irrigation"};
-                                  var txt;
-                    }
+        
                     console.log(postData);
                     $http.post(url3,postData)
                     .success(function (data, status, headers, config)

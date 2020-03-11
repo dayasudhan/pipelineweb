@@ -142,6 +142,18 @@ app.get('/map', function (req, res) {
   var key2  = process.env.GOOGLE_API_KEY;
   res.render('map.ejs', { key: key2 });
 });
+app.get('/etrex', function (req, res) {
+  console.log("request");
+ // console.log(req);
+  console.log("response");
+  //console.log(res);
+  //console.log(process.env.PORT);
+  //console.log(res);
+  
+ 
+  var key2  = process.env.GOOGLE_API_KEY;
+  res.render('etrex.ejs', { key: key2 });
+});
 app.get('/file', function (req, res) {
   console.log("request");
  // console.log(req);
@@ -476,7 +488,55 @@ app.post( '/v1/admin/counters/:id', function( request, response ) {
         }
     });
 });
+app.post( '/v1/etrexline', function( request, response ) {
+  console.log("post /v1/etrexline");
+  console.log(request.body);
+  //console.log(request.body.coordinates);
+ 
+ var ar = [];
+  for(var i = 0; i < request.body.coordinates.length ; i++)
+  {
+    var cord = [request.body.coordinates[i].latitude ,request.body.coordinates[i].longitude];
+    ar.push(cord);
+    
+  }
+  console.log(ar);
+  var indiantime = new Date();;
+  indiantime.setHours(indiantime.getHours() + 5);
+  indiantime.setMinutes(indiantime.getMinutes() + 30);
+  //new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+  console.log(indiantime);
+ 
+var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
+var newtime = months[indiantime.getMonth()] + " " +  indiantime.getDate() + " " + indiantime.getFullYear();
+console.log(newtime);
+  request.body.coordinates = ar;
+  var phoneNumber = parseInt(request.body.phone);
+   var pline = { name: request.body.name, 
+     phone: phoneNumber, 
+     paid:request.body.paid,
+     vendor_username:request.body.vendorusername,
+     date:newtime,
+     size:request.body.size,
+     remarks:request.body.remarks,
+     pipe_type:request.body.pipe_type,
+     purpose:request.body.purpose,
+     live:request.body.live,
+     location: request.body }; 
+     var pipeline = new PlineModel(pline);
+     console.log("post etrexline");
+     return pipeline.save(function( err) {
+     if( !err ) {
+         console.log("no error");
+         console.log(pipeline);
+         return response.send(pipeline); 
+     } else {
+         console.log( err );
+         return response.send('ERROR');
+     }
+ });
+});
 app.post( '/v1/pline/:id', function( request, response ) {
    console.log("post /v1/pline");
    console.log(request.body);
@@ -771,29 +831,50 @@ app.post( '/v1/plinemap/phoneliveall/geowithin/:id', function( request, response
 app.post( '/v1/gpxdatatojson', function( request, response )  
 {
   console.log("post /v1/gpxdatatojson");
- // console.log(request.body);
- // console.log(request.body.content);
+ console.log(request.body.phone);
  var data  = request.body.content;
-//   parseString(xml, function (err, result) {
-//     console.dir(result);
-// });
-var ar = [];
-let parser = new xml2js.Parser();
+
+ var ar = [];
+ let parser = new xml2js.Parser();
   parser.parseString(data, (err, xml) => {
       if(err) {
           console.log(err);
       } else {
         var tracks = parseTrack(xml.gpx.trk);
-     //   console.log(tracks);
-        for(var i = 0; i < tracks.length ; i++)
+         for(var i = 0; i < tracks.length ; i++)
         {
           var cord = [tracks[i].latitude ,tracks[i].longitude,tracks[i].elevation];
           ar.push(cord);
           console.log(i + " = " + cord); 
          }
          console.log(1,ar);
+         request.body.coordinates = ar;
+         request.body.type = "Line";
+         var phoneNumber = parseInt(request.body.phone);
+          var pline = { 
+            name: request.body.name, 
+            phone: phoneNumber, 
+            paid:0,
+            live:"No",
+            location: request.body }; 
+            var pipeline = new PlineModel(pline);
+           
+            console.log("post /v1/gpxdatatojson");
+            console.log(pipeline);
+            return pipeline.save(function( err) {
+            if( !err ) {
+                console.log("no error");
+                console.log(pipeline);
+                return response.send(pipeline); 
+            } else {
+                console.log( err );
+                return response.send('ERROR');
+            }
+        });
       }
   });
+
+   
 });
 app.post( '/v1/gpxtojson', function( request, response )  
 {
