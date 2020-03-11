@@ -479,6 +479,9 @@ angular.module("mapModule", [])
       }
     }
     $scope.initinalizeline2 = function (pipelinepath) {
+      // console.log(pipelinepath);
+      // console.log(pipelinepath[0].lat());
+      // console.log(pipelinepath[0].lng());
      console.log("initinalizeline2");
      initialize();
       //google.maps.event.addDomListener(window, 'load', null);
@@ -488,7 +491,7 @@ angular.module("mapModule", [])
           console.log("initialize");
                var mapOptions = {
                     zoom: 15,
-                    center: new google.maps.LatLng(14.1422855, 75.6774338),
+                    center: new google.maps.LatLng(pipelinepath[0].lat(), pipelinepath[0].lng()),
                     mapTypeId: 'satellite'
                 };
             var map = new google.maps.Map(document.getElementById('map'), mapOptions);
@@ -531,6 +534,12 @@ angular.module("mapModule", [])
        
     };
     $scope.initinalizeline3 = function () {
+      console.log($scope.stringsArray2[0]);
+      // console.log($scope.stringsArray2[i].getAt(i).lat());
+      // console.log($scope.stringsArray2[i].getAt(i).lng());
+      console.log($scope.stringsArray2[0].getAt(0).lat());
+      console.log($scope.stringsArray2[0].getAt(0).lng());
+     
       console.log("initinalizeline3");
       initialize();
        //google.maps.event.addDomListener(window, 'load', null);
@@ -540,7 +549,8 @@ angular.module("mapModule", [])
            console.log("initialize");
                 var mapOptions = {
                      zoom: 15,
-                     center: new google.maps.LatLng(14.1422855, 75.6774338),
+                     center: new google.maps.LatLng($scope.stringsArray2[0].getAt(0).lat(), 
+                     $scope.stringsArray2[0].getAt(0).lng()),
                      mapTypeId: 'satellite'
                  };
              var map = new google.maps.Map(document.getElementById('map'), mapOptions);
