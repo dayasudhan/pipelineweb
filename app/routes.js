@@ -7,6 +7,9 @@ const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GOOGLE_API_KEY,
   Promise: Promise
 });
+const xml2js = require('xml2js');
+const fs = require('fs');
+const parseTrack = require('parse-gpx/src/parseTrack');
 module.exports = function(app, passport) {
 
 // normal routes ===============================================================
@@ -139,7 +142,18 @@ app.get('/map', function (req, res) {
   var key2  = process.env.GOOGLE_API_KEY;
   res.render('map.ejs', { key: key2 });
 });
-
+app.get('/file', function (req, res) {
+  console.log("request");
+ // console.log(req);
+  console.log("response");
+  //console.log(res);
+  //console.log(process.env.PORT);
+  //console.log(res);
+  
+ 
+  var key2  = process.env.GOOGLE_API_KEY;
+  res.render('file.ejs', { key: key2 });
+});
 app.get('/p/vendor_login', function (req, res) {
     res.render('vendor_login', { user : req.user });
 });
@@ -754,20 +768,33 @@ app.post( '/v1/plinemap/phoneliveall/geowithin/:id', function( request, response
       }
   });
 });
-app.post( '/v1/geojsontojson', function( request, response ) {
-  console.log(request.body);
-  let file = './path/to/some.gpx';
-
-  
-  var filePath =request.body.filepath;
-  console.log(filePath);
-parseGpx(filePath).then(track => {
-  console.log(track);
-    console.log(track[0].latitude); // 43.512926660478115
+app.post( '/v1/gpxdatatojson', function( request, response )  
+{
+  console.log("post /v1/gpxdatatojson");
+ // console.log(request.body);
+ // console.log(request.body.content);
+ var data  = request.body.content;
+//   parseString(xml, function (err, result) {
+//     console.dir(result);
+// });
+var ar = [];
+let parser = new xml2js.Parser();
+  parser.parseString(data, (err, xml) => {
+      if(err) {
+          console.log(err);
+      } else {
+        var tracks = parseTrack(xml.gpx.trk);
+     //   console.log(tracks);
+        for(var i = 0; i < tracks.length ; i++)
+        {
+          var cord = [tracks[i].latitude ,tracks[i].longitude,tracks[i].elevation];
+          ar.push(cord);
+          console.log(i + " = " + cord); 
+         }
+         console.log(1,ar);
+      }
+  });
 });
-    return response.send("OK");
-});
-
 app.post( '/v1/gpxtojson', function( request, response )  
 {
   console.log("post /v1/gpxtojson");

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Adding a File</title>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="/javascripts/file.js"></script>
+   
+  </head>
+  <body ng-app="fileModule"   ng-controller="fileController">
+
+    <div >
+        <input type="file" id="myFileInput" />
+        <br /><br />
+        <button ng-click="submit()">
+          Submit
+        </button>
+        <br /><br />
+        <br /><br />
+        <h1>
+          Filename: {{ fileName }}
+        </h1>
+        <h2>
+          File size: {{ fileSize }} Bytes
+        </h2>
+        <h2>
+          File Content: {{ fileContent }}
+        </h2>
+      </div>
+  </body>
+</html>
