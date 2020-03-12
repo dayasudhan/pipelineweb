@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 const LineSchema = new mongoose.Schema({
     type: {
       type: String,
-      enum: ['Line'],
+      enum: ['Line','Point'],
       required: true
     },
     coordinates: {
@@ -22,7 +22,8 @@ const LineSchema = new mongoose.Schema({
     pipe_type:String,
     purpose:String,
     live:String,
-    location: LineSchema
+    location: LineSchema,
+    markers: LineSchema
   });
 
 // var mongoose = require('mongoose');

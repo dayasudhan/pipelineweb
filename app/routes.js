@@ -828,6 +828,50 @@ app.post( '/v1/plinemap/phoneliveall/geowithin/:id', function( request, response
       }
   });
 });
+app.post( '/v1/gpxwaypointstojson', function( request, response )  
+{
+  console.log("post /v1/gpxwaypointstojson");
+
+ var data  = request.body.content;
+
+ var ar = [];
+ let parser = new xml2js.Parser();
+  parser.parseString(data, (err, xml) => {
+      if(err) {
+          console.log(err);
+      } else {
+      //  console.log(xml);
+        console.log(xml.gpx.wpt);
+        var tracks = xml.gpx.wpt;
+        console.log(tracks.length);
+         for(var i = 0; i < tracks.length ; i++)
+        {
+          var cord = [tracks[i]['$'].lat ,tracks[i]['$'].lon,tracks[i].ele[0],tracks[i].name[0]];
+          ar.push(cord);
+          console.log(i + " = " + cord); 
+         }
+         console.log(1,ar);
+         request.body.coordinates = ar;
+         request.body.type = "Point";
+           
+           
+            console.log("post /v1/gpxwaypointstojson");
+            PlineModel.findOneAndUpdate( { 'phone':request.body.phone, 'live':  'yes'},
+            { markers :request.body     },function( err,pipeline) {
+            if( !err ) {
+                console.log("no error");
+                console.log(pipeline);
+                return response.send(pipeline); 
+            } else {
+                console.log( err );
+                return response.send('ERROR');
+            }
+          });
+      }
+  });
+
+   
+});
 app.post( '/v1/gpxdatatojson', function( request, response )  
 {
   console.log("post /v1/gpxdatatojson");
@@ -841,6 +885,7 @@ app.post( '/v1/gpxdatatojson', function( request, response )
           console.log(err);
       } else {
         var tracks = parseTrack(xml.gpx.trk);
+        
          for(var i = 0; i < tracks.length ; i++)
         {
           var cord = [tracks[i].latitude ,tracks[i].longitude,tracks[i].elevation];
