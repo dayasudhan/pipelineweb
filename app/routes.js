@@ -895,12 +895,26 @@ app.post( '/v1/gpxdatatojson', function( request, response )
          console.log(1,ar);
          request.body.coordinates = ar;
          request.body.type = "Line";
+
+        var indiantime = new Date();
+        indiantime.setHours(indiantime.getHours() + 5);
+        indiantime.setMinutes(indiantime.getMinutes() + 30);
+        console.log(indiantime);
+        var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        var newtime = months[indiantime.getMonth()] + " " +  indiantime.getDate() + " " + indiantime.getFullYear();
+
          var phoneNumber = parseInt(request.body.phone);
           var pline = { 
             name: request.body.name, 
             phone: phoneNumber, 
-            paid:0,
-            live:"No",
+            size:request.body.size,
+            remarks:request.body.remarks,
+            pipe_type:request.body.pipe_type,
+            purpose:request.body.purpose,
+            live:request.body.live,
+            paid:request.body.paid,
+            vendor_username:request.body.vendorusername,
+            date:newtime,
             location: request.body }; 
             var pipeline = new PlineModel(pline);
            
@@ -918,8 +932,7 @@ app.post( '/v1/gpxdatatojson', function( request, response )
         });
       }
   });
-
-   
+  
 });
 app.post( '/v1/gpxtojson', function( request, response )  
 {

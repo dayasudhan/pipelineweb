@@ -5,6 +5,12 @@ angular.module("fileModule", [])
     $scope.fileContent = '';
     $scope.fileSize = 0;
     $scope.fileName = '';
+    $scope.live = 'No';
+    $scope.type = 'PVC';
+    $scope.size = '3 Inch';
+    $scope.purpose = 'Irrigation';
+    $scope.paid = 0;
+    $scope.vendor= "Dayasudhan"
     $scope.submit = function () {
         console.log("submit");
         console.log($scope.name);
@@ -29,13 +35,15 @@ angular.module("fileModule", [])
                     console.log("postMaplist");
                     var url3 = "/v1/gpxdatatojson";
                     var postData={content:aReader.result,
-                       
                                   phone:$scope.phone,
-                                
                                   name:$scope.name,
-                                
-                                  pipe_type:"PVC",
-                                  purpose:"Irrigation"};
+                                  live:$scope.live,                               
+                                  size:$scope.size ,
+                                  pipe_type:$scope.type,
+                                  remarks:$scope.remarks,
+                                  purpose:$scope.purpose,
+                                  paid:$scope.paid,
+                                  vendorusername:$scope.vendor};
         
                     console.log(postData);
                     $http.post(url3,postData)
