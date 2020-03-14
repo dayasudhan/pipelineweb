@@ -846,7 +846,12 @@ app.post( '/v1/gpxwaypointstojson', function( request, response )
         console.log(tracks.length);
          for(var i = 0; i < tracks.length ; i++)
         {
-          var cord = [tracks[i]['$'].lat ,tracks[i]['$'].lon,tracks[i].ele[0],tracks[i].name[0]];
+          var floatlat = parseFloat(tracks[i]['$'].lat);
+          var floatlong = parseFloat(tracks[i]['$'].lon);
+          var floatElev = parseFloat(tracks[i].ele[0]);
+
+          var cord = [floatlat ,floatlong,floatElev];
+          var cord = [floatlat ,floatlong,floatElev,tracks[i].name[0]];
           ar.push(cord);
           console.log(i + " = " + cord); 
          }
@@ -888,7 +893,13 @@ app.post( '/v1/gpxdatatojson', function( request, response )
         
          for(var i = 0; i < tracks.length ; i++)
         {
-          var cord = [tracks[i].latitude ,tracks[i].longitude,tracks[i].elevation];
+          var floatlat = parseFloat(tracks[i].latitude);
+          var floatlong = parseFloat(tracks[i].longitude);
+          var floatElev = parseFloat(tracks[i].elevation);
+          console.log(floatlat,"=",tracks[i].latitude);
+          console.log(floatlong,"=",tracks[i].longitude);
+          console.log(floatElev,"=",tracks[i].elevation);
+          var cord = [floatlat ,floatlong,floatElev];
           ar.push(cord);
           console.log(i + " = " + cord); 
          }
