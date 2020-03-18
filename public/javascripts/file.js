@@ -10,7 +10,7 @@ angular.module("fileModule", [])
     $scope.size = '3 Inch';
     $scope.purpose = 'Irrigation';
     $scope.paid = 0;
-    $scope.vendor= "Dayasudhan"
+    $scope.vendor= "Dayasudhan";
     $scope.submit = function () {
         console.log("submit");
         console.log($scope.name);
