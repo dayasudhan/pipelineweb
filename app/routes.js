@@ -1064,7 +1064,7 @@ app.post( '/v1/pline2/:id', function( request, response ) {
 ];
   for(var i = 0; i < ar1.length ; i++)
   {
-    var cord = [ar1[i][0] ,ar1[i][1]];
+    var cord = [ar1[i][1] ,ar1[i][0]];
     ar.push(cord);
     
   }
