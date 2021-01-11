@@ -540,8 +540,6 @@ console.log(newtime);
 app.post( '/v1/pline/:id', function( request, response ) {
    console.log("post /v1/pline");
    console.log(request.body);
-   console.log(request.body.coordinates);
-   console.log(request.body.name);
    //console.log(request.body.coordinates);
   
   var ar = [];
@@ -692,13 +690,65 @@ console.log(newtime);
  // console.log(ar);
 
 });
+app.post( '/v1/pline3/:id', function( request, response ) {
+  console.log("post /v1/pline");
+  console.log(request.body);
+  console.log(request.body.coordinates);
+  console.log(request.body.name);
+  //console.log(request.body.coordinates);
+ 
+ var ar = [];
+  for(var i = 0; i < request.body.coordinates.length ; i++)
+  {
+   
+    var cord = [request.body.coordinates[i][1] ,request.body.coordinates[i][0],request.body.coordinates[i][2]];
+    ar.push(cord);
+    
+  }
+  console.log(ar);
+  var indiantime = new Date();;
+  indiantime.setHours(indiantime.getHours() + 5);
+  indiantime.setMinutes(indiantime.getMinutes() + 30);
+  //new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate());
+  console.log(indiantime);
+ 
+var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+var newtime = months[indiantime.getMonth()] + " " +  indiantime.getDate() + " " + indiantime.getFullYear();
+console.log(newtime);
+  request.body.coordinates = ar;
+  var phoneNumber = parseInt(request.body.phone);
+   var pline = { name: request.body.name, 
+     phone: phoneNumber, 
+     paid:request.body.paid,
+     vendor_username:request.body.vendorusername,
+     date:newtime,
+     size:request.body.size,
+     remarks:request.body.remarks,
+     pipe_type:request.body.pipe_type,
+     purpose:request.body.purpose,
+     live:request.body.live,
+     location: request.body }; 
+     var pipeline = new PlineModel(pline);
+     console.log("post /v1/pline/1");
+     return pipeline.save(function( err) {
+     if( !err ) {
+         console.log("no error");
+         console.log(pipeline);
+         return response.send(pipeline); 
+     } else {
+         console.log( err );
+         return response.send('ERROR');
+     }
+ });
+});
 app.post( '/v1/pline2/:id', function( request, response ) {
   console.log("post /v1/pline2");
   console.log(request.body);
   //console.log(request.body.coordinates);
   var ar = [];
  var ar1 =  [
-  [75.66197248214134,14.20446620000724,557.1664447645021],
+  [75.66197248214134,14.20446620000724,557.1664447645021 ],
   [75.66217849855721,14.20435318670938,556.6664297692231  ],
   [75.66229262401362,14.20428436117039,556.5263224061788   ],
   [75.6623487103943,14.20422873664778,556.2171964598442  ],
