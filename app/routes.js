@@ -1212,11 +1212,11 @@ function registerBlood(req, res, next) {
                   //   console.log( 'registerVendor save complete' );
                   
                   // });
-                  return response.send('SUCCESS');
+                  return res.send('SUCCESS');
               } else {
                 console.log( 'registerVendor error' );
                 console.log( err );
-                return response.send('ERROR');
+                return res.send('ERROR');
               }
         });
     });
