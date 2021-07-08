@@ -1263,12 +1263,21 @@ function storeBloodInfo(request,response,callback,param)
 console.log("storeBloodInfo");
 console.log(request.params.id);
 console.log(request.body);
-BloodInfoModel.updateOne({ 'username':request.params.id},
-    {
+return BloodInfoModel.findOneAndUpdate({ 'username':request.params.id},
+{ 
+ 
+  $addToSet: {members: {$each:[{
       name:request.body.name,
       bloodgroup:request.body.bloodgroup, 
       phone:request.body.phone 
-    },
+    }] }}
+},
+// BloodInfoModel.updateOne({ 'username':request.params.id},
+//     {
+//       name:request.body.name,
+//       bloodgroup:request.body.bloodgroup, 
+//       phone:request.body.phone 
+//     },
      function( err ) {
       if( !err ) {
           console.log( 'storeBloodInfo created' );
