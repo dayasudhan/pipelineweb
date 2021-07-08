@@ -2,6 +2,7 @@ var VendorInfoModel = require('../app/models/VendorInfo');
 var CustomerInfoModel = require('../app/models/CustomerInfo');
 var PlineModel = require('../app/models/LineInfo');
 var CountersModel = require('../app/models/counters');
+var BloodInfoModel = require('../app/models/BloodInfo');
 const parseGpx = require('parse-gpx');
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GOOGLE_API_KEY,
@@ -10,6 +11,7 @@ const googleMapsClient = require('@google/maps').createClient({
 const xml2js = require('xml2js');
 const fs = require('fs');
 const parseTrack = require('parse-gpx/src/parseTrack');
+
 module.exports = function(app, passport) {
 
 // normal routes ===============================================================
@@ -1182,8 +1184,103 @@ app.delete( '/v1/admin/counters/:id', function( request, response ) {
         });
     //});
 });
+////////team bloodgroup
+app.post( '/v1/blood/registerBlood', function( req, res ) {
+  registerBlood(req, res,null);
+});
+function registerBlood(req, res, next) {
+  console.log("/registerVendor");
+  var hotel_id = "B";
+  var res = getNextSequence('blood',function(data) {
 
+    hotel_id = hotel_id + data.sequence;
+    console.log(hotel_id);
 
+      var vendorInfo = new BloodInfoModel({
+        username:req.body.email,
+        id:hotel_id
+      });
+      vendorInfo.save( function( err ) {
+        if( !err ) {
+              console.log( 'registerVendor created' );
+              console.log(req.body.email);
+                  // req.session.save(function (err) {
+                  //   if (err) {
+                  //       console.log( 'registerVendor save error' );
+                  //     return next(err);
+                  //   }
+                  //   console.log( 'registerVendor save complete' );
+                  
+                  // });
+                  return response.send('SUCCESS');
+              } else {
+                console.log( 'registerVendor error' );
+                console.log( err );
+                return response.send('ERROR');
+              }
+        });
+    });
+};
+
+app.get( '/v1/blood/account/all', function( request, response ) {
+
+  return BloodInfoModel.find(function( err, order ) {
+      if( !err ) {
+          return response.send( order );
+      } else {
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+});
+
+app.get( '/v1/blood/info/:id', function( request, response ) {
+console.log("GET --/v1/blood/info/");
+
+return  BloodInfoModel.find({ 'username':request.params.id},
+  function( err, vendor ) {
+    if( !err ) {
+      
+        return response.send( vendor );
+    } else {
+        console.log( err );
+        return response.send('ERROR');
+    }
+});
+});
+
+app.post( '/v1/blood/info/:id', function( req, res ) {
+  console.log("bloodInfo post");
+  console.log(req.body);
+  storeBloodInfo(req,res,function(req,res){
+    console.log("storebloodInfo success");
+  });
+});
+
+function storeBloodInfo(request,response,callback,param)
+{
+console.log("storeBloodInfo");
+console.log(request.params.id);
+console.log(request.body);
+BloodInfoModel.update({ 'username':request.params.id},
+    {
+      name:request.body.name,
+      bloodgroup:request.body.bloodgroup, 
+      phone:request.body.phone 
+    },
+     function( err ) {
+      if( !err ) {
+          console.log( 'storeBloodInfo created' );
+          callback(request,response);
+          return ;
+      } else {
+       console.log( 'storeBloodInfo error' );
+          console.log( err );
+          return response.send('ERROR');
+      }
+  });
+}
+//////
 };
 
 // route middleware to ensure user is logged in

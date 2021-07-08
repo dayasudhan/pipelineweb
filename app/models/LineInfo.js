@@ -13,7 +13,7 @@ const LineSchema = new mongoose.Schema({
   
   const PLineSchema = new mongoose.Schema({
     name: String,
-    phone:Number, 
+    
     paid:Number,
     vendor_username:String,
     date:String,
@@ -23,7 +23,10 @@ const LineSchema = new mongoose.Schema({
     purpose:String,
     live:String,
     location: LineSchema,
-    markers: LineSchema
+    markers: LineSchema,
+    phonenos:[{
+      phone:Number     
+    }]
   });
 
 // var mongoose = require('mongoose');
