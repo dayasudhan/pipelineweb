@@ -1197,13 +1197,13 @@ function registerBlood(req, res, next) {
     console.log(hotel_id);
 
       var vendorInfo = new BloodInfoModel({
-        username:req.body.email,
+        username:'thirthalli',
         id:hotel_id
       });
       vendorInfo.save( function( err ) {
         if( !err ) {
               console.log( 'registerVendor created' );
-              console.log(req.body.email);
+              //console.log(req.body.email);
                   // req.session.save(function (err) {
                   //   if (err) {
                   //       console.log( 'registerVendor save error' );
