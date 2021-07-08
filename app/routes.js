@@ -1262,7 +1262,7 @@ function storeBloodInfo(request,response,callback,param)
 console.log("storeBloodInfo");
 console.log(request.params.id);
 console.log(request.body);
-BloodInfoModel.update({ 'username':request.params.id},
+BloodInfoModel.updateOne({ 'username':request.params.id},
     {
       name:request.body.name,
       bloodgroup:request.body.bloodgroup, 
