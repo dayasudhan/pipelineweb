@@ -1316,7 +1316,7 @@ app.put( '/v1/admin/coverageArea', function( request, response ) {
      console.log(request.body.areaName);
  
         return CoverageAreaModel.findOneAndUpdate({ 'cityName':request.body.cityName},
-            { $addToSet: {'subAreas': {$each:[{name: request.body.areaName}] }}},
+            { $addToSet: {subAreas: {$each:[{name: request.body.areaName}] }}},
             function( err, order ) 
              {
         if( !err ) {
