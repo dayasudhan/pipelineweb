@@ -7,6 +7,7 @@ var BloodInfoSchema = new mongoose.Schema({
         id:String,
         phone:Number, 
         bloodgroup:String,
+        place:String,
         address:{
             addressLine1:String,
             addressLine2:String,

@@ -3,6 +3,7 @@ var CustomerInfoModel = require('../app/models/CustomerInfo');
 var PlineModel = require('../app/models/LineInfo');
 var CountersModel = require('../app/models/counters');
 var BloodInfoModel = require('../app/models/BloodInfo');
+var CoverageAreaModel = require('../app/models/coverageArea')
 const parseGpx = require('parse-gpx');
 const googleMapsClient = require('@google/maps').createClient({
   key: process.env.GOOGLE_API_KEY,
@@ -1269,15 +1270,11 @@ return BloodInfoModel.findOneAndUpdate({ 'username':request.params.id},
   $addToSet: {members: {$each:[{
       name:request.body.name,
       bloodgroup:request.body.bloodgroup, 
-      phone:request.body.phone 
+      phone:request.body.phone ,
+      place:request.body.place
     }] }}
 },
-// BloodInfoModel.updateOne({ 'username':request.params.id},
-//     {
-//       name:request.body.name,
-//       bloodgroup:request.body.bloodgroup, 
-//       phone:request.body.phone 
-//     },
+
      function( err ) {
       if( !err ) {
           console.log( 'storeBloodInfo created' );
@@ -1291,6 +1288,86 @@ return BloodInfoModel.findOneAndUpdate({ 'username':request.params.id},
   });
 }
 //////
+app.post( '/v1/admin/coverageArea', function( request, response ) {
+    // console.log(request.body);
+     console.log("request.user");
+    console.log(request.user);
+     var dd = {'cityName':request.body.cityName};
+     var coverageArea = new CoverageAreaModel(
+         dd);
+       return coverageArea.save(function( err) {
+        if( !err ) {
+            console.log("no error");
+            console.log(coverageArea);
+            return response.send(coverageArea);
+        } else {
+            console.log( err );
+            return response.send('ERROR');
+        }
+    });
+
+});
+
+app.put( '/v1/admin/coverageArea', function( request, response ) {
+     console.log("v1/admin/coverageArea");
+
+     console.log(request.body);
+     console.log(request.body.cityName);
+     console.log(request.body.areaName);
+    
+
+   
+    console.log('request.body.isBulkAreaOnly' ,isbulk);
+        return CoverageAreaModel.update({ 'cityName':request.body.cityName},
+            { $addToSet: {'subAreas': {$each:[{name: request.body.areaName}] }}},
+            function( err, order ) 
+             {
+        if( !err ) {
+            console.log("no error");
+            console.log(order);
+            return response.send('SUCCESS');
+        } else {
+            console.log( err );
+            return response.send('ERROR');
+        }
+    });
+});
+
+
+app.get( '/v1/admin/coverageArea', function( request, response ) {
+    console.log("/v1/admin/coverageArea");
+  	
+    console.log("request.user");
+    console.log(request.user);
+	    return CoverageAreaModel.find(function( err, order ) {
+	        if( !err ) {
+	            console.log("no error");
+	            return response.send( order );
+	        } else {
+	            console.log("error");
+	            console.log( err );
+	            return response.send('ERROR');
+	        }
+	    });
+
+});
+
+//Delete a book
+app.delete( '/v1/admin/coverageAreaAll', function( request, response ) {
+    console.log("/v1/admin/coverageArea");
+
+
+		return CoverageAreaModel.remove( {},function( err ) {
+        if( !err ) {
+            console.log( 'Book removed' );
+            return response.send( 'Delete SUCCESS' );
+        } else {
+            console.log( err );
+            return response.send('ERROR');
+        }
+		});
+
+});
 };
 
 // route middleware to ensure user is logged in
