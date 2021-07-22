@@ -1255,7 +1255,7 @@ app.post( '/v1/blood/info/:id', function( req, res ) {
   console.log(req.body);
   storeBloodInfo(req,res,function(req,res){
     console.log("storebloodInfo success");
-    return req.send('ERROR');;
+    return res.send('ERROR');;
   });
 });
 
