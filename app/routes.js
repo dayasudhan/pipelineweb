@@ -1314,10 +1314,7 @@ app.put( '/v1/admin/coverageArea', function( request, response ) {
      console.log(request.body);
      console.log(request.body.cityName);
      console.log(request.body.areaName);
-    
-
-   
-    console.log('request.body.isBulkAreaOnly' ,isbulk);
+ 
         return CoverageAreaModel.update({ 'cityName':request.body.cityName},
             { $addToSet: {'subAreas': {$each:[{name: request.body.areaName}] }}},
             function( err, order ) 
