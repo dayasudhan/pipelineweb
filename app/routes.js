@@ -1271,7 +1271,7 @@ return BloodInfoModel.findOneAndUpdate({ 'username':request.params.id},
       name:request.body.name,
       bloodgroup:request.body.bloodgroup, 
       phone:request.body.phone ,
-      place:request.body.place
+      place:request.params.id
     }] }}
 },
 
