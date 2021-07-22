@@ -1308,7 +1308,7 @@ app.post( '/v1/admin/coverageArea', function( request, response ) {
 
 });
 
-app.post( '/v1/admin/coverageArea2', function( request, response ) {
+app.put( '/v1/admin/coverageArea', function( request, response ) {
      console.log("v1/admin/coverageArea");
 
      console.log(request.body);
@@ -1316,7 +1316,10 @@ app.post( '/v1/admin/coverageArea2', function( request, response ) {
      console.log(request.body.areaName);
  
         return CoverageAreaModel.findOneAndUpdate({ 'cityName':request.body.cityName},
-            { $addToSet: {subAreas: {$each:[{name: request.body.areaName}] }}},
+            {
+              $addToSet: { subAreas: {$each:[{
+                name: request.body.areaName
+              }] }}},
             function( err, order ) 
              {
         if( !err ) {

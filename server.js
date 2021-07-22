@@ -28,7 +28,7 @@ process.env.ATLAS_URISTRING ||
   'mongodb://localhost/pipelineweb';
 
 // mongoose
-mongoose.set('useFindAndModify', false);
+//mongoose.set('useFindAndModify', false);
 mongoose.connect(uristring,function (err, res) {
   if (err) { 
     console.log ('ERROR connecting to: ' + uristring + '. ' + err);
