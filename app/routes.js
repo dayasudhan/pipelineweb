@@ -1186,7 +1186,7 @@ app.delete( '/v1/admin/counters/:id', function( request, response ) {
     //});
 });
 ////////team bloodgroup
-app.post( '/v1/blood/registerBlood', function( req, res ) {
+app.post( '/v1/blood/registerBlood/:id', function( req, res ) {
   registerBlood(req, res,null);
 });
 function registerBlood(req, res, next) {
@@ -1198,7 +1198,7 @@ function registerBlood(req, res, next) {
     console.log(hotel_id);
 
       var vendorInfo = new BloodInfoModel({
-        username:'thirthalli',
+        username:req.params.id,
         id:hotel_id
       });
       vendorInfo.save( function( err ) {
