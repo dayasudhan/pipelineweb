@@ -15,7 +15,7 @@
     "express": "*",
     "express-session": "~1.0.0",
     "firebase": "*",
-    "firebase-admin": "^5.5.1",
+    "firebase-admin": "^11.4.1",
     "method-override": "~1.0.0",
     "mongodb": "^3.3.2",
     "mongoose": "^5.10.13",
